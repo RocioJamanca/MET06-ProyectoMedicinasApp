@@ -30,7 +30,7 @@ public class Arduino extends MainActivity {
         final long[] start = {0};
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://androidarduino-68fe7-default-rtdb.firebaseio.com");
         DatabaseReference myRef = database.getReference("/UsersData/BDd0FDJDogWDFXkFx6TS0Ft120L2/dades/int");
-                //LLegir valor
+                //LLegir el valor
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
