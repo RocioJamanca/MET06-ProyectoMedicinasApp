@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/btn_image"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+ <ScrollView
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+   <TextView
+       android:id="@+id/text_Lun"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Lunes" />
+
+   <TextView
+       android:id="@+id/textViewLun"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content" />
+
+   <TextView
+       android:id="@+id/text_Mar"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Martes" />
+
+   <TextView
+       android:id="@+id/textViewMar"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content" />
+
+   <TextView
+       android:id="@+id/text_Mier"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Miercoles" />
+
+   <TextView
+       android:id="@+id/textViewMier"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content" />
+
+   <TextView
+       android:id="@+id/text_jue"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Jueves" />
+
+   <TextView
+       android:id="@+id/textViewJue"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content" />
+
+   <TextView
+       android:id="@+id/text_vier"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Viernes" />
+
+   <TextView
+       android:id="@+id/textViewVie"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content" />
+
+   <TextView
+       android:id="@+id/text_sab"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Sabado" />
+
+   <TextView
+       android:id="@+id/textViewSab"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content" />
+
+   <TextView
+       android:id="@+id/text_dom"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Domingo" />
+
+   <TextView
+       android:id="@+id/textViewDom"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content" />
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textmed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nombre medicamento" />
+
+    <EditText
+        android:id="@+id/nombre_medicina"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Nombre medicamento"
+        android:inputType="textPersonName" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:orientation="horizontal">
+
+     <Spinner
+         android:id="@+id/spinner2"
+         android:layout_width="403dp"
+         android:layout_height="match_parent"
+         android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="159dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/btn_image2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#03A9F4"
+        android:text="Selecciona Imagen del medicamento" />
+
+    <Button
+        android:id="@+id/btn_sendcalendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#03A9F4"
+        android:text="Actualizar Calendario" />
+
+   </LinearLayout>
+  </LinearLayout>
+ </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

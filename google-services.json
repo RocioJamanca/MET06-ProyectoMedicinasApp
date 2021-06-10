@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "792568836381",
+    "project_id": "androidentrega-f5196",
+    "storage_bucket": "androidentrega-f5196.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792568836381:android:13f056bb60c183fe43f1f4",
+        "android_client_info": {
+          "package_name": "com.example.androidarduino"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792568836381-dl3n791mjf6j6nbfe7v71p79can4fg8m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEa1qQ0tB7kKauWBZ_SbAXhplDM8PtwYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "792568836381-dl3n791mjf6j6nbfe7v71p79can4fg8m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
