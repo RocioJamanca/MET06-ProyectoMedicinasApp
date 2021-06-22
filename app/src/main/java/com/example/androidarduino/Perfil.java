@@ -16,9 +16,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 
 public class Perfil extends MainActivity {
     TextView mail_t;
@@ -59,7 +57,7 @@ public class Perfil extends MainActivity {
         in_mail = (TextView) findViewById(R.id.textView4);
         //mail_t = (TextView) findViewById(R.id.EditTextEmail); //originals
         //name_t = (TextView) findViewById(R.id.text_surname); //originals
-        reg = (Button) findViewById(R.id.btn_register_2);
+        reg = (Button) findViewById(R.id.btn_registrarse_register);
         serialNum = findViewById(R.id.text_serialnum);
         Bselectimage = findViewById(R.id.btn_image);
         foto_perfil =findViewById(R.id.image_perfil);

@@ -24,10 +24,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -51,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btn_register_2 = (Button) findViewById(R.id.btn_reg);
+        btn_register_2 = (Button) findViewById(R.id.btn_register_login);
         btn_log = (Button) findViewById(R.id.btn_login);
         btn_profile = (Button) findViewById(R.id.btn_profile);
         btn_calendar = (Button) findViewById(R.id.btn_calendar);
@@ -107,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         btn_register_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), Register.class);
+                Intent i = new Intent(getApplicationContext(), Register2.class);
                 startActivityForResult(i,2);
             }
         });

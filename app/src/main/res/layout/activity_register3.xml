@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
     <ImageView
-        android:id="@+id/medcare_logo"
-        android:layout_width= "wrap_content"
+        android:id="@+id/logoImage"
+        android:layout_width="wrap_content"
         android:layout_height="150dp"
         android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,7 +15,7 @@
         app:srcCompat="@drawable/medicine" />
 
     <TextView
-        android:id="@+id/medcare_title"
+        android:id="@+id/medcareTitle_Register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -26,30 +23,26 @@
         android:lineSpacingExtra="8sp"
         android:text="MedCare"
         android:textAllCaps="false"
-
         android:textSize="40sp"
         android:typeface="monospace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/medcare_logo" />
-
+        app:layout_constraintTop_toBottomOf="@+id/logoImage" />
 
     <EditText
-        android:id="@+id/txt_email_login"
-        android:hint="Email"
-        android:autofillHints="Email"
-        android:layout_width="wrap_content"
+        android:id="@+id/txt_email_register"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:hint="Email"
+        android:layout_marginTop="10dp"
         android:ems="15"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/medcare_title"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/medcareTitle_Register" />
 
     <EditText
-        android:id="@+id/txt_password_login"
+        android:id="@+id/txt_password_register"
         android:hint="Password"
         android:autofillHints="Password"
         android:layout_marginTop="10dp"
@@ -59,30 +52,18 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_email_login" />
-
+        app:layout_constraintTop_toBottomOf="@+id/txt_email_register"/>
 
     <Button
-        android:id="@+id/btn_login_login"
+        android:id="@+id/btn_registrarse_register"
+        android:text="Registrarse"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:text="LogIn"
         android:layout_marginTop="20dp"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_password_login" />
-
-    <Button
-        android:id="@+id/btn_register_login"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:text="Registrarse"
-        android:layout_marginTop="15dp"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login_login" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_password_register"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

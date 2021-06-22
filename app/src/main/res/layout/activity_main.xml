@@ -6,79 +6,86 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/medicine" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    <TextView
+        android:id="@+id/medcareTitle_Register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-light"
+        android:lineSpacingExtra="8sp"
+        android:text="MedCare"
+        android:textAllCaps="false"
 
-            <Button
-                android:id="@+id/btn_login"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:backgroundTint="#4CAF50"
-                android:text="Acceder" />
+        android:textSize="40sp"
+        android:typeface="monospace"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoImage" />
 
-            <Button
-                android:id="@+id/btn_reg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="#CDDC39"
-                android:text="Registrar" />
+    <Button
+        android:id="@+id/btn_register_login"
+        android:text="Registrar"
+        android:layout_marginTop="50dp"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/medcareTitle_Register"
+         />
 
-        </LinearLayout>
+    <Button
+        android:id="@+id/btn_login"
+        android:text="Acceder"
+        android:layout_marginTop="10dp"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_register_login"
+        />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+    <Button
+        android:id="@+id/btn_calendar"
+        android:text="Calendario"
+        android:layout_marginTop="10dp"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login"
+         />
 
-        </LinearLayout>
+    <Button
+        android:id="@+id/btn_profile"
+        android:text="Editar Perfil"
+        android:layout_marginTop="10dp"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_calendar" />
+    <Button
+        android:id="@+id/btn_arduino"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Mando remoto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_profile"
+        />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_arduino"
-                android:layout_width="match_parent"
-                android:layout_height="172dp"
-                android:layout_weight="1"
-                android:backgroundTint="#52702F"
-                android:text="Mando remoto" />
 
-            <Button
-                android:id="@+id/btn_calendar"
-                android:layout_width="match_parent"
-                android:layout_height="172dp"
-                android:layout_weight="1"
-                android:backgroundTint="#03A9F4"
-                android:text="Calendario" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="79dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btn_profile"
-                android:layout_width="match_parent"
-                android:layout_height="77dp"
-                android:layout_weight="1"
-                android:backgroundTint="#CF2E2E"
-                android:text="Editar Perfil" />
-
-        </LinearLayout>
-
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
