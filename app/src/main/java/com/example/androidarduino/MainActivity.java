@@ -51,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         btn_register_2 = (Button) findViewById(R.id.btn_register_login);
         btn_log = (Button) findViewById(R.id.btn_login);
-        btn_profile = (Button) findViewById(R.id.btn_profile);
-        btn_calendar = (Button) findViewById(R.id.btn_calendar);
-        btn_arduino = (Button) findViewById(R.id.btn_arduino);
+        btn_profile = (Button) findViewById(R.id.btn_profile_menu);
+        btn_calendar = (Button) findViewById(R.id.btn_calendar_menu);
+        btn_arduino = (Button) findViewById(R.id.btn_arduino_menu);
         mAuth = FirebaseAuth.getInstance();
         btn_profile.setEnabled(false);
         btn_calendar.setEnabled(false);

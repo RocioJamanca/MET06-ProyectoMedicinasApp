@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/medicine" />
 
     <TextView
-        android:id="@+id/medcare_title"
+        android:id="@+id/medcare_title_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -46,7 +46,7 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/medcare_title"
+        app:layout_constraintTop_toBottomOf="@+id/medcare_title_login"
          />
 
     <EditText

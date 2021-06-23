@@ -17,7 +17,7 @@
         app:srcCompat="@drawable/medicine" />
 
     <TextView
-        android:id="@+id/medcareTitle_Register"
+        android:id="@+id/medcareTitle_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/medcareTitle_Register"
+        app:layout_constraintTop_toBottomOf="@+id/medcareTitle_menu"
          />
 
     <Button
@@ -55,7 +55,7 @@
         />
 
     <Button
-        android:id="@+id/btn_calendar"
+        android:id="@+id/btn_calendar_menu"
         android:text="Calendario"
         android:layout_marginTop="10dp"
         android:layout_width="180dp"
@@ -66,23 +66,23 @@
          />
 
     <Button
-        android:id="@+id/btn_profile"
+        android:id="@+id/btn_profile_menu"
         android:text="Editar Perfil"
         android:layout_marginTop="10dp"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_calendar" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_calendar_menu" />
     <Button
-        android:id="@+id/btn_arduino"
+        android:id="@+id/btn_arduino_menu"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Mando remoto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_profile"
+        app:layout_constraintTop_toBottomOf="@+id/btn_profile_menu"
         />
 
 

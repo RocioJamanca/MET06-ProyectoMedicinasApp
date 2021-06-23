@@ -16,7 +16,7 @@
         android:src="@drawable/addusericon"/>
 
     <TextView
-        android:id="@+id/medcareTitle_Register"
+        android:id="@+id/medcareTitle_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -41,7 +41,7 @@
         android:ems="15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/medcareTitle_Register"/>
+        app:layout_constraintTop_toBottomOf="@+id/medcareTitle_menu"/>
 
     <EditText
         android:id="@+id/txt_surname_register"

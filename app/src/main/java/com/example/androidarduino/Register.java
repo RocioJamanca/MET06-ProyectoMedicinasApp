@@ -4,9 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,21 +23,42 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageActivity;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
+import id.zelory.compressor.Compressor;
+
 public class Register extends AppCompatActivity {
+
     DatabaseReference databaseReference;
-    String is_patient;
+    StorageReference storageReference;
+    ProgressDialog loading;
+    //To compress the profile image and the upload to the storage
+    Bitmap thumb_bitmap =null;
     private static final int PERMISSION_CODE = 1000;
     private static final int IMAGE_CAPTURE_CODE = 1001;
     de.hdodenhof.circleimageview.CircleImageView profilePhoto;
     Uri image_uri;
+
+    boolean emailUsed;
+    String is_patient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +66,9 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         // [START declare_database_ref]
         databaseReference = FirebaseDatabase.getInstance().getReference("usuarios");
+        storageReference= FirebaseStorage.getInstance().getReference().child("UsersProfilePhoto");
+        loading = new ProgressDialog(this);
+
         EditText input_name = findViewById(R.id.txt_name_register);
         EditText input_surname = findViewById(R.id.txt_surname_register);
         EditText input_email = findViewById(R.id.txt_email_register);
@@ -51,6 +78,9 @@ public class Register extends AppCompatActivity {
         Button register = findViewById(R.id.btn_registrarse_register);
         Button newPhoto = findViewById(R.id.btn_newPhoto_register);
         profilePhoto = findViewById(R.id.img_user_register);
+
+        ArrayList<String> check_emailList = new ArrayList<>();
+
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +96,7 @@ public class Register extends AppCompatActivity {
                 //Todo: Incluir galeria
 
                 if (!email.isEmpty() && !password.isEmpty()&& !surname.isEmpty() && !name.isEmpty() && !age.isEmpty() && !confirmationPass.isEmpty()) {
+
                     if (!validarEmail(email)|| password.length()<6 ||!password.equals(confirmationPass) ){
                         if(!validarEmail(email) && (password.length()<6) && (!password.equals(confirmationPass))) {
                             input_email.setError("Email is not valid!");
@@ -84,10 +115,43 @@ public class Register extends AppCompatActivity {
                     }
 
                     else {
+                        //Check if the email is already used
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference myUserReference = database.getReference("usuarios");
+
+                            myUserReference.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull @org.jetbrains.annotations.NotNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()){
+                                        for(DataSnapshot ds: snapshot.getChildren()){
+                                            String email = ds.child("email").getValue().toString();
+                                            check_emailList.add(email);
+                                        }
+                                        for(int i=0; i<check_emailList.size();i++){
+                                            if (input_email.equals(check_emailList.get(i))){
+                                                Toast.makeText(getApplicationContext(), "This email is already registered", Toast.LENGTH_SHORT).show();
+                                                emailUsed=true;
+                                            }
+                                        }
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(@NonNull @org.jetbrains.annotations.NotNull DatabaseError error) {
+                                    Toast.makeText(getApplicationContext(), "No ha funcionado", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                    }
+
+                    //If the email  isn't used create a new user
+                    if (!emailUsed){
+
                         User user = new User(email,password,name,surname,age,"",is_patient,"");
                         databaseReference.push().setValue(user);
-                        Toast.makeText(getApplicationContext(), "El usuario ha sido correctamente añadido", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "El usuario ha sido correctamente añadido", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                        startActivity(intent);
                     }
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Please enter the credentials!", Toast.LENGTH_LONG).show();
                 }
@@ -98,26 +162,22 @@ public class Register extends AppCompatActivity {
         newPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){ //System is >= marshmellow
-                    if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-                        String [] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                        requestPermissions(permission, PERMISSION_CODE);
-                    }
-
-                    else{
-                        //Granted
-                        openCamera();
-                    }
-                }
-                else{ //System is < marshmellow
-                    openCamera();
-                }
+//                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){ //System is >= marshmellow
+//                    if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+//                        String [] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+//                        requestPermissions(permission, PERMISSION_CODE);
+//                    }
+//                    else{
+//                        //Granted
+                        CropImage.startPickImageActivity(Register.this);
+//                    }
+//                }
+//                else{ //System is < marshmellow
+//                    openCamera();
+//                }
             }
         });
-
-
-
-    }
+    }//On create end
 
 
     private boolean validarEmail(String email) {
@@ -142,38 +202,79 @@ public class Register extends AppCompatActivity {
         }
     }
 
-    private void openCamera() {
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE,"New Picture");
-        values.put(MediaStore.Images.Media.DESCRIPTION,"From the Camera");
-        image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
-
-        //Camera intent
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
-        startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE);
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case PERMISSION_CODE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    openCamera();
-                } else {
-                    Toast.makeText(this, "Permission denied..", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    }
+//    private void openCamera() {
+//        ContentValues values = new ContentValues();
+//        values.put(MediaStore.Images.Media.TITLE,"New Picture");
+//        values.put(MediaStore.Images.Media.DESCRIPTION,"From the Camera");
+//        image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
+//
+//        //Camera intent
+//        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
+//        startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE);
+//    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        switch (requestCode) {
+//            case PERMISSION_CODE: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    openCamera();
+//                } else {
+//                    Toast.makeText(this, "Permission denied..", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            //Set image to image View
-            profilePhoto.setImageURI(image_uri);
+//        if (resultCode == RESULT_OK) {
+//            //Set image to image View
+//            profilePhoto.setImageURI(image_uri);
+//        }
+        if (requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+            image_uri = CropImage.getPickImageResultUri(this, data);
+
+            //Crop Image
+            CropImage.activity(image_uri).setGuidelines(CropImageView.Guidelines.ON)
+                    .setRequestedSize(640,480)
+                    .setAspectRatio(2,1).start(this);
+
+        }
+
+        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if(resultCode == RESULT_OK){
+                Uri resultUri = result.getUri();
+                File url = new File(resultUri.getPath());
+
+                //Now we compress the image
+                try{
+                    thumb_bitmap = new Compressor(this).setMaxWidth(640).setMaxHeight(480).setQuality(90).compressToBitmap(url);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                thumb_bitmap.compress((Bitmap.CompressFormat.JPEG),90,(byteArrayOutputStream));
+                final byte[] thumb_byte = byteArrayOutputStream.toByteArray();
+                //File compressed
+
+                //Now we create a random name to name the file
+                int p = (int) (Math.random() * 25 + 1); int s = (int) (Math.random() * 25 + 1);
+                int t = (int) (Math.random() * 25 + 1); int c = (int) (Math.random() * 25 + 1);
+                int number1 = (int) (Math.random() * 1012 + 2111);
+                int number2 = (int) (Math.random() * 1012 + 2111);
+
+                String[] elements = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+
+                final String randomName = elements[p] + elements[s] + number1  + elements[t] + elements[c] + number2 + "compressed.jpg";
+
+
+            }
         }
     }
 }
