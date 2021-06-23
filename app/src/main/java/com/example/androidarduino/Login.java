@@ -1,5 +1,6 @@
 package com.example.androidarduino;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,9 +44,8 @@ public class Login extends AppCompatActivity {
 
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
+        DatabaseReference myRef = database.getReference("usuarios");
 
-        myRef.setValue("Hello, World!");
 
 
 
@@ -65,7 +65,7 @@ public class Login extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             // This method is called once with the initial value and again
                             // whenever data at this location is updated.
-                            String value = dataSnapshot.getValue(String.class);
+                            String value = dataSnapshot.child("email").getValue(String.class);
                             Toast.makeText(getApplicationContext(),"Value is: " + value, Toast.LENGTH_LONG).show();
                         }
 
@@ -84,8 +84,8 @@ public class Login extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Acceder al Registro
-
+                Intent intent = new Intent(getApplicationContext(), Register.class);
+                startActivity(intent);
             }
         });
     }

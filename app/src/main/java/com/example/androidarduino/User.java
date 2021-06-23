@@ -7,6 +7,24 @@ public class User {
     public String surname;
     public String age;
     public String device;
+    public String pacient; //Paciente o familiar?
+    public String profile_photo;
+
+    public String getPacient() {
+        return pacient;
+    }
+
+    public void setPacient(String pacient) {
+        this.pacient = pacient;
+    }
+
+    public String getProfile_photo() {
+        return profile_photo;
+    }
+
+    public void setProfile_photo(String profile_photo) {
+        this.profile_photo = profile_photo;
+    }
 
     public String getEmail() {
         return email;
@@ -56,12 +74,14 @@ public class User {
         this.device = device;
     }
 
-    public User(String email, String password, String name, String surname, String age, String device) {
+    public User(String email, String password, String name, String surname, String age, String device, String pacient, String profile_photo) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.surname = surname;
         this.age = age;
         this.device = device;
+        this.pacient = pacient;
+        this.profile_photo = profile_photo;
     }
 }
