@@ -36,8 +36,7 @@ public class Login extends AppCompatActivity {
         Button btnRegister = findViewById(R.id.btn_register_login);
 
 
-        ArrayList<String> emailList = new ArrayList<>();
-        ArrayList<String> passwordList = new ArrayList<>();
+
 
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -51,32 +50,32 @@ public class Login extends AppCompatActivity {
 
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference myUserReference = database.getReference("usuarios");
-                    try {
-                        myUserReference.addValueEventListener(new ValueEventListener() {
+
+                        myUserReference.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull @org.jetbrains.annotations.NotNull DataSnapshot snapshot) {
                                 if (snapshot.exists()){
+                                    ArrayList<String> emailList = new ArrayList<>();
+                                    ArrayList<String> passwordList = new ArrayList<>();
                                     for(DataSnapshot ds: snapshot.getChildren()){
                                         String email = ds.child("email").getValue().toString();
                                         String pass = ds.child("password").getValue().toString();
                                         emailList.add(email);
                                         passwordList.add(pass);
                                     }
+                                    boolean userFound = false;
                                     for(int i=0; i<emailList.size();i++){
-                                        if (input_email.equals(emailList.get(i))){
-                                            for(int j=0; j<passwordList.size();j++)
-                                            {
-                                                if (input_pass.equals(passwordList.get(i))){
-                                                    Toast.makeText(getApplicationContext(), "Email and password are correct, wolcome again!", Toast.LENGTH_SHORT).show();
-                                                }
-                                                else {
-                                                    Toast.makeText(getApplicationContext(), "Email or password are incorrect", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
+                                        if (input_email.equals(emailList.get(i)) && input_pass.equals(passwordList.get(i))){
+                                            userFound = true;
+                                            Toast.makeText(getApplicationContext(), "Email and password are correct, welcome again!", Toast.LENGTH_SHORT).show();
                                         }
-                                        else {
-                                            Toast.makeText(getApplicationContext(), "Email or password incorrect", Toast.LENGTH_SHORT).show();
-                                        }
+                                    }
+                                    if(!userFound){
+                                        Toast.makeText(getApplicationContext(), "Email or password incorrect", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else {
+                                        Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                                        startActivity(intent);
                                     }
                                 }
                             }
@@ -85,11 +84,6 @@ public class Login extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "No ha funcionado", Toast.LENGTH_LONG).show();
                             }
                         });
-                    } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(), "No ha funcionado", Toast.LENGTH_LONG).show();
-                    }
-
-
                 } else {
                     Toast.makeText(getApplicationContext(), "Please enter the credentials!", Toast.LENGTH_LONG).show();
                 }
@@ -99,12 +93,13 @@ public class Login extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                username.setText("");
+                password.setText("");
+
                 Intent intent = new Intent(getApplicationContext(), Register.class);
                 startActivity(intent);
             }
         });
     }
-
-
 }
 
