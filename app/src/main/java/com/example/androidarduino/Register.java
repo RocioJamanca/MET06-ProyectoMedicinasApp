@@ -23,6 +23,9 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,10 +33,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageActivity;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -56,7 +62,8 @@ public class Register extends AppCompatActivity {
     private static final int IMAGE_CAPTURE_CODE = 1001;
     de.hdodenhof.circleimageview.CircleImageView profilePhoto;
     Uri image_uri;
-
+    Uri downloadUri;
+    String downUri;
     boolean emailUsed;
     String is_patient;
 
@@ -67,7 +74,6 @@ public class Register extends AppCompatActivity {
         // [START declare_database_ref]
         databaseReference = FirebaseDatabase.getInstance().getReference("usuarios");
         storageReference= FirebaseStorage.getInstance().getReference().child("UsersProfilePhoto");
-        loading = new ProgressDialog(this);
 
         EditText input_name = findViewById(R.id.txt_name_register);
         EditText input_surname = findViewById(R.id.txt_surname_register);
@@ -140,16 +146,15 @@ public class Register extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), "No ha funcionado", Toast.LENGTH_LONG).show();
                                 }
                             });
-                    }
+                            //If the email  isn't used create a new user
+                            if (!emailUsed){
 
-                    //If the email  isn't used create a new user
-                    if (!emailUsed){
-
-                        User user = new User(email,password,name,surname,age,"",is_patient,"");
-                        databaseReference.push().setValue(user);
-                        Toast.makeText(getApplicationContext(), "El usuario ha sido correctamente añadido", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), MainMenu.class);
-                        startActivity(intent);
+                                User user = new User(email,password,name,surname,age,"",is_patient,downUri);
+                                databaseReference.push().setValue(user);
+                                Toast.makeText(getApplicationContext(), "El usuario ha sido correctamente añadido", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                                startActivity(intent);
+                            }
                     }
 
                 } else {
@@ -235,7 +240,7 @@ public class Register extends AppCompatActivity {
 //            //Set image to image View
 //            profilePhoto.setImageURI(image_uri);
 //        }
-        if (requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+        if (requestCode==CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK){
             image_uri = CropImage.getPickImageResultUri(this, data);
 
             //Crop Image
@@ -250,6 +255,7 @@ public class Register extends AppCompatActivity {
             if(resultCode == RESULT_OK){
                 Uri resultUri = result.getUri();
                 File url = new File(resultUri.getPath());
+               Picasso.with(this).load(url).into(profilePhoto);
 
                 //Now we compress the image
                 try{
@@ -271,8 +277,27 @@ public class Register extends AppCompatActivity {
 
                 String[] elements = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
 
-                final String randomName = elements[p] + elements[s] + number1  + elements[t] + elements[c] + number2 + "compressed.jpg";
+                final String randomName = elements[p] + elements[s] + number1  + elements[t] + elements[c] + number2 + "_compressed.jpg";
 
+                StorageReference ref = storageReference.child(randomName);
+                UploadTask uploadTask = ref.putBytes(thumb_byte);
+                Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull @NotNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if (!task.isSuccessful()){
+                            throw Objects.requireNonNull(task.getException());
+                        }
+                        return ref.getDownloadUrl();
+                    }
+
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<Uri> task) {
+                       downloadUri = task.getResult();
+                        downUri = downloadUri.toString();
+                       Toast.makeText(Register.this, "Image correctly added", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
             }
         }
