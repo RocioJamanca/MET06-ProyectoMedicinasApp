@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/loginLayout">
 
 
 
@@ -62,7 +63,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_email_login" />
 
-
     <Button
         android:id="@+id/btn_login_login"
         android:layout_width="180dp"
@@ -84,6 +84,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_login_login" />
+
+    <ImageButton
+        android:id="@+id/btn_seePassword_login"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:background="#00FFFFFF"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="@+id/txt_password_login"
+        app:layout_constraintTop_toTopOf="@+id/txt_password_login"
+        app:srcCompat="@drawable/view_password"
+        app:tint="#7EB5FA" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
