@@ -65,8 +65,6 @@ public class Register extends AppCompatActivity {
     private static final int STORAGE_REQUEST = 200;
     private static final int IMAGEPICK_GALLERY_REQUEST = 300;
     private static final int IMAGE_PICKCAMERA_REQUEST = 400;
-    String cameraPermission[];
-    String storagePermission[];
     de.hdodenhof.circleimageview.CircleImageView profilePhoto;
     Uri image_uri;
     Uri downloadUri;
@@ -93,7 +91,7 @@ public class Register extends AppCompatActivity {
         EditText input_age = findViewById(R.id.txt_age_register);
         EditText input_confirm_pass = findViewById(R.id.txt_passconfirm_register);
         Button register = findViewById(R.id.btn_registrarse_register);
-        Button newPhoto = findViewById(R.id.btn_newPhoto_register);
+        //Button newPhoto = findViewById(R.id.btn_newPhoto_register);
         profilePhoto = findViewById(R.id.img_user_register);
 
 
@@ -229,24 +227,6 @@ public class Register extends AppCompatActivity {
                 CropImage.startPickImageActivity(Register.this);
             }
         });
-        newPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){ //System is >= marshmellow
-//                    if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-//                        String [] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-//                        requestPermissions(permission, PERMISSION_CODE);
-//                    }
-//                    else{
-//                        //Granted
-                        CropImage.startPickImageActivity(Register.this);
-//                    }
-//                }
-//                else{ //System is < marshmellow
-//                    openCamera();
-//                }
-            }
-        });
     }//On create end
 
 
@@ -281,39 +261,11 @@ public class Register extends AppCompatActivity {
         }
     }
 
-//    private void openCamera() {
-//        ContentValues values = new ContentValues();
-//        values.put(MediaStore.Images.Media.TITLE,"New Picture");
-//        values.put(MediaStore.Images.Media.DESCRIPTION,"From the Camera");
-//        image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
-//
-//        //Camera intent
-//        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
-//        startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE);
-//    }
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        switch (requestCode) {
-//            case PERMISSION_CODE: {
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    openCamera();
-//                } else {
-//                    Toast.makeText(this, "Permission denied..", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        }
-//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == RESULT_OK) {
-//            //Set image to image View
-//            profilePhoto.setImageURI(image_uri);
-//        }
         if (requestCode==CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK){
             image_uri = CropImage.getPickImageResultUri(this, data);
 
