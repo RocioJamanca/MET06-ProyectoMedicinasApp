@@ -14,6 +14,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -152,6 +154,13 @@ public class Register extends AppCompatActivity {
                                     }
                                 }
                                 if(!emailUsed){ //Añadimos el usuario si el email no está registrado
+                                    input_age.setText("");
+                                    input_confirm_pass.setText("");
+                                    input_email.setText("");
+                                    input_name.setText("");
+                                    input_pass.setText("");
+                                    input_surname.setText("");
+
                                     registNewUser(email,password,name,surname,age,"",is_patient,downUri);}
                             }
                             @Override
@@ -167,7 +176,46 @@ public class Register extends AppCompatActivity {
                 }
 
             }
+        }); //Final on click botón register
+
+        ImageButton btnSeePass = findViewById(R.id.btn_seePassword_register);
+        btnSeePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(input_pass.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+                    btnSeePass.setImageResource(R.drawable.hide_password);
+
+                    //Show Password
+                    input_pass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+                else{
+                    btnSeePass.setImageResource(R.drawable.view_password);
+                    //Hide Password
+                    input_pass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+                }
+            }
         });
+
+        ImageButton btnConfirmSeePass = findViewById(R.id.btn_seeConfirmPass_register);
+        btnConfirmSeePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(input_confirm_pass.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+                    btnConfirmSeePass.setImageResource(R.drawable.hide_password);
+
+                    //Show Password
+                    input_confirm_pass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+                else{
+                    btnConfirmSeePass.setImageResource(R.drawable.view_password);
+                    //Hide Password
+                    input_confirm_pass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+                }
+            }
+        });
+
 
         newPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,25 +237,6 @@ public class Register extends AppCompatActivity {
         });
     }//On create end
 
-    public void readEmailDatabase (){
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @org.jetbrains.annotations.NotNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    check_emailList = new ArrayList<>();
-                    //Añadimos cada uno de los emails de los diferentes usuarios de la db en la lista
-                    for(DataSnapshot ds: snapshot.getChildren()){
-                        String email = ds.child("email").getValue().toString();
-                        check_emailList.add(email);
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull @org.jetbrains.annotations.NotNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(), "No ha funcionado", Toast.LENGTH_LONG).show();
-            }
-        });
-    }
 
     public void registNewUser (String email,String password,String name, String surname, String age,String device,String patient ,String url){
         User user = new User(email,password,name,surname,age,device,patient,url);
@@ -278,8 +307,8 @@ public class Register extends AppCompatActivity {
 
             //Crop Image
             CropImage.activity(image_uri).setGuidelines(CropImageView.Guidelines.ON)
-                    .setRequestedSize(640,480)
-                    .setAspectRatio(2,1).start(this);
+                    .setRequestedSize(500,500)
+                    .setAspectRatio(1,1).start(this);
 
         }
 
@@ -292,13 +321,13 @@ public class Register extends AppCompatActivity {
 
                 //Now we compress the image
                 try{
-                    thumb_bitmap = new Compressor(this).setMaxWidth(640).setMaxHeight(480).setQuality(90).compressToBitmap(url);
+                    thumb_bitmap = new Compressor(this).setMaxWidth(500).setMaxHeight(500).setQuality(80).compressToBitmap(url);
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                thumb_bitmap.compress((Bitmap.CompressFormat.JPEG),90,(byteArrayOutputStream));
+                thumb_bitmap.compress((Bitmap.CompressFormat.JPEG),80,(byteArrayOutputStream));
                 final byte[] thumb_byte = byteArrayOutputStream.toByteArray();
                 //File compressed
 
@@ -327,8 +356,9 @@ public class Register extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull @NotNull Task<Uri> task) {
                        downloadUri = task.getResult();
+                        assert downloadUri != null;
                         downUri = downloadUri.toString();
-                       Toast.makeText(Register.this, "Image correctly added", Toast.LENGTH_SHORT).show();
+                     //  Toast.makeText(Register.this, "Image correctly added", Toast.LENGTH_SHORT).show();
                     }
                 });
 

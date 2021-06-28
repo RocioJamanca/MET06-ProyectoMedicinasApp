@@ -8,11 +8,12 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_user_register"
         android:layout_width="wrap_content"
-        android:layout_height="110dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/medcareTitle_menu"
         android:src="@drawable/addusericon"/>
 
     <TextView
@@ -125,7 +126,8 @@
             android:onClick="onRadioBtnClicked_Register"
             android:text="I'm a patient"
             android:textColor="#878383"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:focusable="true" />
 
         <RadioButton
             android:id="@+id/btn_relative"
@@ -138,7 +140,8 @@
             android:onClick="onRadioBtnClicked_Register"
             android:text="I'm a relative"
             android:textColor="#878383"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:focusable="true" />
     </RadioGroup>
     <Button
         android:id="@+id/btn_newPhoto_register"
@@ -161,6 +164,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_newPhoto_register"
         />
+
+    <ImageButton
+        android:id="@+id/btn_seePassword_register"
+        android:layout_width="30dp"
+        android:layout_height="35dp"
+        android:background="#00FFFFFF"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="@+id/txt_password_register"
+        app:layout_constraintTop_toTopOf="@+id/txt_password_register"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_password_register"
+        app:srcCompat="@drawable/view_password"
+        app:tint="#7EB5FA"
+        android:contentDescription="HideEye" />
+
+    <ImageButton
+        android:id="@+id/btn_seeConfirmPass_register"
+        android:layout_width="30dp"
+        android:layout_height="35dp"
+        android:background="#00FFFFFF"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="@+id/txt_passconfirm_register"
+        app:layout_constraintTop_toTopOf="@+id/txt_passconfirm_register"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_passconfirm_register"
+        app:srcCompat="@drawable/view_password"
+        app:tint="#7EB5FA"
+        android:contentDescription="HideEye" />
 
 
 
