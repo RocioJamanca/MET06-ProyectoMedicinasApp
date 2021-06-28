@@ -60,8 +60,13 @@ public class Register extends AppCompatActivity {
     ProgressDialog loading;
     //To compress the profile image and the upload to the storage
     Bitmap thumb_bitmap =null;
-    private static final int PERMISSION_CODE = 1000;
-    private static final int IMAGE_CAPTURE_CODE = 1001;
+    private static final int GalleryPick = 1;
+    private static final int CAMERA_REQUEST = 100;
+    private static final int STORAGE_REQUEST = 200;
+    private static final int IMAGEPICK_GALLERY_REQUEST = 300;
+    private static final int IMAGE_PICKCAMERA_REQUEST = 400;
+    String cameraPermission[];
+    String storagePermission[];
     de.hdodenhof.circleimageview.CircleImageView profilePhoto;
     Uri image_uri;
     Uri downloadUri;
@@ -69,6 +74,7 @@ public class Register extends AppCompatActivity {
     String is_patient = "";
     //Para la comprobación de la lista de emails para que no se pueda "rerregistrar" un usuario con el mismo email
     ArrayList<String> check_emailList = new ArrayList<>();
+
 
 
     @Override
@@ -217,6 +223,12 @@ public class Register extends AppCompatActivity {
         });
 
 
+        profilePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CropImage.startPickImageActivity(Register.this);
+            }
+        });
         newPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -307,8 +319,7 @@ public class Register extends AppCompatActivity {
 
             //Crop Image
             CropImage.activity(image_uri).setGuidelines(CropImageView.Guidelines.ON)
-                    .setRequestedSize(500,500)
-                    .setAspectRatio(1,1).start(this);
+                    .start(this);
 
         }
 
@@ -321,7 +332,7 @@ public class Register extends AppCompatActivity {
 
                 //Now we compress the image
                 try{
-                    thumb_bitmap = new Compressor(this).setMaxWidth(500).setMaxHeight(500).setQuality(80).compressToBitmap(url);
+                    thumb_bitmap = new Compressor(this).setQuality(80).compressToBitmap(url);
 
                 } catch (IOException e) {
                     e.printStackTrace();

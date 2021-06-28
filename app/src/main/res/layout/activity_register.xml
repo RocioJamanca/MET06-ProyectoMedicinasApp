@@ -7,14 +7,14 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_user_register"
-        android:layout_width="wrap_content"
+        android:layout_width="411dp"
         android:layout_height="100dp"
         android:layout_marginTop="50dp"
+        android:src="@drawable/addusericon"
+        app:layout_constraintBottom_toTopOf="@+id/medcareTitle_menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/medcareTitle_menu"
-        android:src="@drawable/addusericon"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/medcareTitle_menu"
@@ -34,15 +34,15 @@
 
     <EditText
         android:id="@+id/txt_name_register"
-        android:hint="Name"
-        android:autofillHints="Password"
-        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:autofillHints="Password"
         android:ems="15"
+        android:hint="Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/medcareTitle_menu"/>
+        app:layout_constraintTop_toBottomOf="@+id/medcareTitle_menu" />
 
     <EditText
         android:id="@+id/txt_surname_register"
