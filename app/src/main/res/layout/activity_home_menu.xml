@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".HomeMenu">
 
     <ImageView
         android:id="@+id/logoImage"
@@ -17,7 +17,7 @@
         app:srcCompat="@drawable/medicine" />
 
     <TextView
-        android:id="@+id/medcareTitle_menu_editProfile"
+        android:id="@+id/medcareTitle_menu_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -25,80 +25,43 @@
         android:lineSpacingExtra="8sp"
         android:text="MedCare"
         android:textAllCaps="false"
-
         android:textSize="40sp"
         android:typeface="monospace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logoImage" />
 
-    <TextView
-        android:id="@+id/medcareWelcome_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="sans-serif-light"
-        android:lineSpacingExtra="8sp"
-        android:text="Welcome back Andres"
-        android:textAllCaps="false"
-        android:textSize="20sp"
-        android:typeface="monospace"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/medcareTitle_menu_editProfile" />
-
     <Button
-        android:id="@+id/btn_register_login"
-        android:text="Registrar"
+        android:id="@+id/btn_profile_home"
+        android:text="Profile"
         android:layout_marginTop="50dp"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/medcareWelcome_menu"
+        app:layout_constraintTop_toBottomOf="@+id/medcareTitle_menu_home"
         />
 
     <Button
-        android:id="@+id/btn_login"
-        android:text="Acceder"
+        android:id="@+id/btn_calendar_home"
+        android:text="Calendar"
         android:layout_marginTop="10dp"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_register_login"
+        app:layout_constraintTop_toBottomOf="@+id/btn_profile_home"
         />
 
     <Button
-        android:id="@+id/btn_calendar_menu"
-        android:text="Calendario"
+        android:id="@+id/btn_remote_home"
+        android:text="Remote"
         android:layout_marginTop="10dp"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login"
+        app:layout_constraintTop_toBottomOf="@+id/btn_calendar_home"
         />
-
-    <Button
-        android:id="@+id/btn_profile_menu"
-        android:text="Editar Perfil"
-        android:layout_marginTop="10dp"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_calendar_menu" />
-    <Button
-        android:id="@+id/btn_arduino_menu"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Mando remoto"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_profile_menu"
-        />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

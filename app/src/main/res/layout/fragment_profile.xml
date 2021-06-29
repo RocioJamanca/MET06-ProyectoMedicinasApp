@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profile">
+    tools:context=".ui.profile.ProfileFragment">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img_userProfile_profile"
+        android:id="@+id/img_userProfile_editProfile"
         android:layout_width="411dp"
         android:layout_height="150dp"
         android:layout_marginTop="50dp"
@@ -17,22 +17,22 @@
         app:layout_constraintTop_toTopOf="parent"
         />
     <TextView
-        android:id="@+id/medcareTitle_menu_profile"
+        android:id="@+id/medcareTitle_menu_editProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:fontFamily="sans-serif-light"
         android:lineSpacingExtra="8sp"
-        android:text="User Profile"
+        android:text="MedCare Profile"
         android:textAllCaps="false"
         android:textSize="20sp"
         android:typeface="monospace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_userProfile_profile" />
+        app:layout_constraintTop_toBottomOf="@+id/img_userProfile_editProfile" />
 
     <EditText
-        android:id="@+id/text_name_profile"
+        android:id="@+id/text_name_editProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -44,10 +44,10 @@
         android:textColor="#2F3D40"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/medcareTitle_menu_profile" />
+        app:layout_constraintTop_toBottomOf="@+id/medcareTitle_menu_editProfile" />
 
     <EditText
-        android:id="@+id/text_surname_profile"
+        android:id="@+id/text_surname_editProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Surname"
@@ -59,10 +59,10 @@
         android:ems="15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_name_profile"/>
+        app:layout_constraintTop_toBottomOf="@+id/text_name_editProfile"/>
 
     <EditText
-        android:id="@+id/text_age_profile"
+        android:id="@+id/text_age_editProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Age"
@@ -74,7 +74,7 @@
         android:ems="15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_surname_profile"/>
+        app:layout_constraintTop_toBottomOf="@+id/text_surname_editProfile"/>
 
     <EditText
         android:id="@+id/text_email_profile"
@@ -89,59 +89,65 @@
         android:clickable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_age_profile"/>
+        app:layout_constraintTop_toBottomOf="@+id/text_age_editProfile"/>
 
-    <EditText
-        android:id="@+id/text_device_profile"
+    <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Device"
-        android:editable="false"
-        android:textColor="#2F3D40"
+        android:id="@+id/btn_radioBtnGroup_editProfile"
         android:layout_marginTop="10dp"
-        android:autofillHints="Device"
-        android:ems="15"
-        android:clickable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_email_profile"/>
-    <EditText
-        android:id="@+id/text_patient_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="I'm a patient"
-        android:editable="false"
-        android:textColor="#2F3D40"
-        android:layout_marginTop="10dp"
-        android:autofillHints="Device"
-        android:ems="15"
-        android:clickable="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_device_profile"/>
+        app:layout_constraintTop_toBottomOf="@+id/text_email_profile"
+        android:orientation="horizontal"
+        >
 
+        <RadioButton
+            android:id="@+id/btn_patient_editProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="I'm a patient"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textSize="18sp"
+            android:textColor="#2F3D40"
+            android:fontFamily="sans-serif"/>
+
+        <RadioButton
+            android:id="@+id/btn_relative_editProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="I'm a relative"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textSize="18sp"
+            android:textColor="#2F3D40"
+            android:fontFamily="sans-serif"/>
+    </RadioGroup>
 
     <Button
-        android:id="@+id/btn_changePass_profile"
+        android:id="@+id/btn_saveChanges_editProfile"
         android:text="Change Password"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_patient_profile"/>
+        app:layout_constraintTop_toBottomOf="@+id/btn_radioBtnGroup_editProfile"/>
 
     <Button
         android:id="@+id/btn_editProfile_profile"
         android:text="Edit Profile"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_changePass_profile"/>
+        app:layout_constraintTop_toBottomOf="@+id/btn_saveChanges_editProfile"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

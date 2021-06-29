@@ -1,21 +1,24 @@
 package com.example.androidarduino;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     public String email;
     public String password;
     public String name;
     public String surname;
     public String age;
     public String device;
-    public String pacient; //Paciente o familiar?
+    public String patient; //Paciente o familiar?
     public String profile_photo;
 
-    public String getPacient() {
-        return pacient;
+
+    public String getPatient() {
+        return patient;
     }
 
-    public void setPacient(String pacient) {
-        this.pacient = pacient;
+    public void setPatient(String pacient) {
+        this.patient = pacient;
     }
 
     public String getProfile_photo() {
@@ -81,7 +84,7 @@ public class User {
         this.surname = surname;
         this.age = age;
         this.device = device;
-        this.pacient = pacient;
+        this.patient = pacient;
         this.profile_photo = profile_photo;
     }
 }

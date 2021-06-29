@@ -226,7 +226,8 @@ public class Register extends AppCompatActivity {
         User user = new User(email,password,name,surname,age,device,patient,url);
         databaseReference.push().setValue(user);
         Toast.makeText(getApplicationContext(), "El usuario ha sido correctamente añadido", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+        Intent intent = new Intent(getApplicationContext(), HomeMenu.class);
+        intent.putExtra("email", email);
         startActivity(intent);
     }
 
@@ -272,7 +273,7 @@ public class Register extends AppCompatActivity {
             if(resultCode == RESULT_OK){
                 Uri resultUri = result.getUri();
                 File url = new File(resultUri.getPath());
-               Picasso.with(this).load(url).into(profilePhoto);
+               Picasso.get().load(url).into(profilePhoto);
 
                 //Now we compress the image
                 try{

@@ -2,6 +2,7 @@ package com.example.androidarduino;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -17,7 +18,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -73,7 +77,9 @@ public class Login extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(), "Email or password incorrect", Toast.LENGTH_SHORT).show();
                                     }
                                     else {
-                                        Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                                        Intent intent = new Intent(getApplicationContext(), HomeMenu.class);
+                                        //Pasamos el usuario
+                                        intent.putExtra("email", email);
                                         startActivity(intent);
                                     }
                                 }

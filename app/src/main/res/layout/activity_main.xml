@@ -17,7 +17,7 @@
         app:srcCompat="@drawable/medicine" />
 
     <TextView
-        android:id="@+id/medcareTitle_menu"
+        android:id="@+id/medcareTitle_menu_editProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/medcareTitle_menu"
+        app:layout_constraintTop_toBottomOf="@+id/medcareTitle_menu_editProfile"
          />
 
     <Button

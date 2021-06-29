@@ -47,7 +47,7 @@ public class Perfil extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_perfil);
         clase = (RadioGroup)findViewById(R.id.tipo_paciente);
 
         txt_Name = findViewById(R.id.text_name);

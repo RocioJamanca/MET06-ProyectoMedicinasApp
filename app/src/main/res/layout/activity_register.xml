@@ -11,13 +11,13 @@
         android:layout_height="100dp"
         android:layout_marginTop="50dp"
         android:src="@drawable/addusericon"
-        app:layout_constraintBottom_toTopOf="@+id/medcareTitle_menu"
+        app:layout_constraintBottom_toTopOf="@+id/medcareTitle_menu_editProfile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/medcareTitle_menu"
+        android:id="@+id/medcareTitle_menu_editProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -42,7 +42,7 @@
         android:hint="Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/medcareTitle_menu" />
+        app:layout_constraintTop_toBottomOf="@+id/medcareTitle_menu_editProfile" />
 
     <EditText
         android:id="@+id/txt_surname_register"
