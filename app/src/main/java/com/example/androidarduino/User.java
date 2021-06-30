@@ -2,7 +2,7 @@ package com.example.androidarduino;
 
 import java.io.Serializable;
 
-public class User implements Serializable {
+public class User  {
     public String email;
     public String password;
     public String name;
@@ -77,14 +77,17 @@ public class User implements Serializable {
         this.device = device;
     }
 
-    public User(String email, String password, String name, String surname, String age, String device, String pacient, String profile_photo) {
+    public User(String email, String password, String name, String surname, String age, String device, String patient, String profile_photo) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.surname = surname;
         this.age = age;
         this.device = device;
-        this.patient = pacient;
+        this.patient = patient;
         this.profile_photo = profile_photo;
     }
+
+    public User()
+    {}
 }

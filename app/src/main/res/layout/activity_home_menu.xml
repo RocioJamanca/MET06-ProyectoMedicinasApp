@@ -31,15 +31,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logoImage" />
 
+
+    <TextView
+        android:id="@+id/txt_name_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-light"
+        android:lineSpacingExtra="8sp"
+        android:text="MedCare"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:typeface="monospace"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/medcareTitle_menu_home" />
+
+
     <Button
         android:id="@+id/btn_profile_home"
         android:text="Profile"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/medcareTitle_menu_home"
+        app:layout_constraintTop_toBottomOf="@+id/txt_name_home"
         />
 
     <Button
@@ -62,6 +79,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_calendar_home"
+        />
+
+    <Button
+        android:id="@+id/btn_logOut_home"
+        android:text="Log Out"
+        android:layout_marginTop="10dp"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_remote_home"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

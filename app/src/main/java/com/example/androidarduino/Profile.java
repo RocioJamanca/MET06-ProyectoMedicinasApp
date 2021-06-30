@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +35,11 @@ public class Profile extends AppCompatActivity {
     String userEmail;
     User profileUser;
     String dataBasePath;
+
+    FirebaseAuth firebaseAuth;
+    FirebaseDatabase firebaseDatabase;
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +53,26 @@ public class Profile extends AppCompatActivity {
         EditText txt_email = findViewById(R.id.text_email_profile);
         EditText txt_device = findViewById(R.id.text_device_profile);
         EditText txt_patient = findViewById(R.id.text_patient_profile);
-
         ImageView img_userProfile = findViewById(R.id.img_userProfile_profile);
-
         Button btnChangePass = findViewById(R.id.btn_changePass_profile);
         Button btnEditProfile = findViewById(R.id.btn_editProfile_profile);
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseAuth= FirebaseAuth.getInstance();
+
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull @NotNull FirebaseAuth firebaseAuth) {
+                FirebaseUser mFirebaseUser = firebaseAuth.getCurrentUser();
+                if(mFirebaseUser!=null){
+
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Please login!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
 
 
         //Datos de usuario
@@ -136,11 +158,6 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent2 = new Intent(Profile.this, ProfileEdit.class);
-                intent2.putExtra("path", dataBasePath);
-                //Pasamos el usuario
-               // Bundle bundle =  new Bundle();
-                //bundle.putSerializable("user",profileUser);
-                //bundle.putString("path",dataBasePath);
                 startActivity(intent2);
             }
         });
@@ -148,6 +165,11 @@ public class Profile extends AppCompatActivity {
 
 
 
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        firebaseAuth.addAuthStateListener(mAuthStateListener);
     }
 
 
