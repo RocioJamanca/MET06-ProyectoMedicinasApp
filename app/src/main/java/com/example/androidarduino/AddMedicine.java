@@ -69,9 +69,8 @@ public class AddMedicine extends AppCompatActivity implements AdapterView.OnItem
                 else {
                     FirebaseUser mFirebaseUser = firebaseAuth.getCurrentUser();
                     DatabaseReference dataRef = firebaseDatabase.getReference("usuarios").child(mFirebaseUser.getUid());
-                    Medicine medicine = new Medicine("",day,medicineName.getText().toString());
-                    dataRef.child("medicine").setValue(medicine);
-
+                    Medicine medicine = new Medicine("",medicineName.getText().toString(),""); //Aqui aun no es ni si ni no
+                    dataRef.child("medicine").child(day).push().setValue(medicine);
                 }
 
             }

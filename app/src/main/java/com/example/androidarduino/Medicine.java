@@ -2,26 +2,36 @@ package com.example.androidarduino;
 
 public class Medicine {
 
-    public String profile_photo;
+    public String medicine_photo;
     public String day;
     public String medicine_name;
 
-    public Medicine(String profile_photo, String day, String medicine_name) {
-        this.profile_photo = profile_photo;
-        this.day = day;
+    public String getTook() {
+        return took;
+    }
+
+    public void setTook(String took) {
+        this.took = took;
+    }
+
+    public String took;
+
+    public Medicine(String medicine_photo, String medicine_name, String took) {
+        this.medicine_photo = medicine_photo;
         this.medicine_name = medicine_name;
+        this.took =took;
     }
 
     public Medicine( ) {
 
     }
 
-    public String getProfile_photo() {
-        return profile_photo;
+    public String medicine_photo() {
+        return medicine_photo;
     }
 
-    public void setProfile_photo(String profile_photo) {
-        this.profile_photo = profile_photo;
+    public void setmedicine_photo(String profile_photo) {
+        this.medicine_photo = profile_photo;
     }
 
     public String getDay() {
