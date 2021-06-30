@@ -53,18 +53,18 @@ public class Login extends AppCompatActivity {
         firebaseAuth= FirebaseAuth.getInstance();
         databaseReference = firebaseDatabase.getReference("usuarios");
 
-//        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull @NotNull FirebaseAuth firebaseAuth) {
-//                FirebaseUser mFirebaseUser = firebaseAuth.getCurrentUser();
-//                if(mFirebaseUser!=null){
-//                    moveToHomeActivity(mFirebaseUser);
-//                }
-//                else{
-//                    Toast.makeText(getApplicationContext(), "Please login!", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        };
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull @NotNull FirebaseAuth firebaseAuth) {
+                FirebaseUser mFirebaseUser = firebaseAuth.getCurrentUser();
+                if(mFirebaseUser!=null){
+                    moveToHomeActivity(mFirebaseUser);
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Please login!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
 
 
 
@@ -136,7 +136,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-       // firebaseAuth.addAuthStateListener(mAuthStateListener);
+       firebaseAuth.addAuthStateListener(mAuthStateListener);
     }
     private void moveToHomeActivity(FirebaseUser mFirebaseUser) {
         firebaseDatabase.getReference("usuarios").child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
@@ -162,6 +162,8 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
+
 
 
 }

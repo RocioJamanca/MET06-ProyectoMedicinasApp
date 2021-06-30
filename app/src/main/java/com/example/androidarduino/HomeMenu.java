@@ -24,7 +24,7 @@ public class HomeMenu extends AppCompatActivity {
         Button btnRemote = findViewById(R.id.btn_remote_home);
         Button btnLogOut = findViewById(R.id.btn_logOut_home);
         TextView completeName = findViewById(R.id.txt_name_home);
-        completeName.setText("Welcome " + getIntent().getStringExtra("completeName"));
+        //completeName.setText("Welcome " + getIntent().getStringExtra("completeName"));
 
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override

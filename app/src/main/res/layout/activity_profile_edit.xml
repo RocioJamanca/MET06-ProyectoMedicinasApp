@@ -41,6 +41,7 @@
         android:clickable="false"
         android:ems="15"
         android:hint="Name"
+        android:inputType="textPersonName"
         android:textColor="#2F3D40"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,11 +51,11 @@
         android:id="@+id/text_surname_editProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:inputType="textPersonName"
         android:hint="Surname"
         android:textColor="#2F3D40"
         android:layout_marginTop="10dp"
         android:autofillHints="Surname"
-        android:clickable="false"
         android:ems="15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,25 +69,12 @@
         android:textColor="#2F3D40"
         android:layout_marginTop="10dp"
         android:autofillHints="Ages"
-        android:clickable="false"
+        android:inputType="number"
         android:ems="15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_surname_editProfile"/>
 
-    <EditText
-        android:id="@+id/text_email_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Email"
-        android:textColor="#2F3D40"
-        android:layout_marginTop="10dp"
-        android:autofillHints="Email"
-        android:ems="15"
-        android:clickable="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_age_editProfile"/>
     <EditText
         android:id="@+id/text_device_editProfile"
         android:layout_width="wrap_content"
@@ -96,10 +84,9 @@
         android:layout_marginTop="10dp"
         android:autofillHints="Device"
         android:ems="15"
-        android:clickable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_email_profile"/>
+        app:layout_constraintTop_toBottomOf="@+id/text_age_editProfile"/>
 
     <RadioGroup
         android:layout_width="wrap_content"

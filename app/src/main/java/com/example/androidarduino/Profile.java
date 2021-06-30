@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,12 +42,12 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        EditText txt_name = findViewById(R.id.text_name_profile);
-        EditText txt_surname = findViewById(R.id.text_surname_profile);
-        EditText txt_age = findViewById(R.id.text_age_profile);
-        EditText txt_email = findViewById(R.id.text_email_profile);
-        EditText txt_device = findViewById(R.id.text_device_profile);
-        EditText txt_patient = findViewById(R.id.text_patient_profile);
+        TextView txt_name = findViewById(R.id.text_name_profile);
+        TextView txt_surname = findViewById(R.id.text_surname_profile);
+        TextView txt_age = findViewById(R.id.text_age_profile);
+        TextView txt_email = findViewById(R.id.text_email_profile);
+        TextView txt_device = findViewById(R.id.text_device_profile);
+        TextView txt_patient = findViewById(R.id.text_patient_profile);
         ImageView img_userProfile = findViewById(R.id.img_userProfile_profile);
         Button btnChangePass = findViewById(R.id.btn_changePass_profile);
         Button btnEditProfile = findViewById(R.id.btn_editProfile_profile);
@@ -64,10 +65,10 @@ public class Profile extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     User user = snapshot.getValue(User.class);
-                                    txt_name.setText(user.getName());
-                                    txt_surname.setText(user.getSurname());
-                                    txt_age.setText(user.getAge());
-                                    txt_email.setText(user.getEmail());
+                                    txt_name.setText("Name: "+user.getName());
+                                    txt_surname.setText("Surname: "+ user.getSurname());
+                                    txt_age.setText("Age: "+user.getAge());
+                                    txt_email.setText("Email: "+user.getEmail());
 
                                     if(user.getPatient().equals("")){
                                         txt_patient.setText("User profile has not been assigned yet");
@@ -76,7 +77,7 @@ public class Profile extends AppCompatActivity {
                                     }if(user.getDevice().equals("")){
                                         txt_device.setText("Device has not been assigned yet");
                                     }else {
-                                        txt_device.setText(user.getDevice());
+                                        txt_device.setText("Device: "+user.getDevice());
                                     }if(user.getProfile_photo().equals("")){
 
                                     }else {

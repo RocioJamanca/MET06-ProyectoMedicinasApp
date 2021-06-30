@@ -39,7 +39,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-light"
         android:lineSpacingExtra="8sp"
-        android:text="MedCare"
+        android:text="Home"
         android:textAllCaps="false"
         android:textSize="20sp"
         android:typeface="monospace"

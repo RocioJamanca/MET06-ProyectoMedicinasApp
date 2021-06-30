@@ -109,11 +109,11 @@ public class Register extends AppCompatActivity {
                 String confirmationPass = input_confirm_pass.getText().toString();
 
                 //El primer if es para asegurarnos que los campos están completados
-                if (!email.isEmpty() && !password.isEmpty()&& !surname.isEmpty() && !name.isEmpty() && !age.isEmpty() && !confirmationPass.isEmpty()) {
+                if (!email.isEmpty() && !password.isEmpty()&& !surname.isEmpty() && !name.isEmpty() && !age.isEmpty() && !confirmationPass.isEmpty() && !is_patient.isEmpty()) {
 
                     //Asegurarnos que el formato de email es correcto la contraseña tiene almenos 6 caracteres
                     // y la contraseña y la confirmación de contraseña coinciden, en caso de que no se cumpla alguna condicion entramos
-                    if (!validarEmail(email)|| password.length()<6 ||!password.equals(confirmationPass) ){
+                    if (!validarEmail(email)|| password.length()<6 ||!password.equals(confirmationPass)  ){
                         //En caso de que t0do esté mal se muestra los errores
                         if(!validarEmail(email) && (password.length()<6) && (!password.equals(confirmationPass))) {
                             input_email.setError("Email is not valid!");
@@ -132,6 +132,8 @@ public class Register extends AppCompatActivity {
                         else if (!password.equals(confirmationPass)){
                             input_confirm_pass.setError("Passwords do not match try again!");
                             input_confirm_pass.requestFocus();
+                        }else if(is_patient.isEmpty()){
+                            Toast.makeText(getApplicationContext(), "Please, check if you are a patient or relative", Toast.LENGTH_SHORT).show();
                         }
                         //Si la contraseña no tiene los carácteres correctos
                         else {
@@ -252,7 +254,7 @@ public class Register extends AppCompatActivity {
                                     Intent intent = new Intent(getApplicationContext(), HomeMenu.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                                             Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    intent.putExtra("email", email);
+                                    intent.putExtra("completeName", name + " " + surname);
                                     startActivity(intent);
                                 }
                             });
