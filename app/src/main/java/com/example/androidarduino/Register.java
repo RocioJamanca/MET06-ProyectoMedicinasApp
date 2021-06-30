@@ -21,7 +21,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,9 +50,11 @@ import id.zelory.compressor.Compressor;
 
 public class Register extends AppCompatActivity {
 
+    FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     StorageReference storageReference;
-    ProgressDialog loading;
+    FirebaseAuth mFirebaseAuth;
+
     //To compress the profile image and the upload to the storage
     Bitmap thumb_bitmap =null;
     private static final int GalleryPick = 1;
@@ -72,8 +77,11 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         //Declaracion de la ruta de la base de datos,
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("usuarios");
         storageReference= FirebaseStorage.getInstance().getReference().child("UsersProfilePhoto");
+
 
         //Inputs del layout del registro
         EditText input_name = findViewById(R.id.txt_name_register);
@@ -109,20 +117,26 @@ public class Register extends AppCompatActivity {
                         //En caso de que t0do esté mal se muestra los errores
                         if(!validarEmail(email) && (password.length()<6) && (!password.equals(confirmationPass))) {
                             input_email.setError("Email is not valid!");
+                            input_email.requestFocus();
                             input_pass.setError("Password must have at least 6 characters");
+                            input_pass.requestFocus();
                             input_confirm_pass.setError("Passwords do not match try again!");
+                            input_confirm_pass.requestFocus();
                         }
                         //Si únicamente el email no es correcto.
                         else if (!validarEmail(email)){
                             input_email.setError("Email is not valid!");
+                            input_email.requestFocus();
                         }
                         //Si la contraseña y confirmación de contraseña no coinciden
                         else if (!password.equals(confirmationPass)){
                             input_confirm_pass.setError("Passwords do not match try again!");
+                            input_confirm_pass.requestFocus();
                         }
                         //Si la contraseña no tiene los carácteres correctos
                         else {
                             input_pass.setError("Password must have at least 6 characters");
+                            input_pass.requestFocus();
                         }
                     }
 
@@ -223,12 +237,31 @@ public class Register extends AppCompatActivity {
 
 
     public void registNewUser (String email,String password,String name, String surname, String age,String device,String patient ,String url){
-        User user = new User(email,password,name,surname,age,device,patient,url);
-        databaseReference.push().setValue(user);
-        Toast.makeText(getApplicationContext(), "El usuario ha sido correctamente añadido", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getApplicationContext(), HomeMenu.class);
-        intent.putExtra("email", email);
-        startActivity(intent);
+
+        mFirebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                        if(!task.isSuccessful()){
+                            Toast.makeText(getApplicationContext(), "Error Ocurred!", Toast.LENGTH_SHORT).show();
+                        } else{
+                            User user = new User(email,password,name,surname,age,device,patient,url);
+                            String userId = task.getResult().getUser().getUid();
+                            firebaseDatabase.getReference("usuarios/"+userId).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Intent intent = new Intent(getApplicationContext(), HomeMenu.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                                            Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    intent.putExtra("email", email);
+                                    startActivity(intent);
+                                }
+                            });
+
+                        }
+                    }
+                });
+
+               // databaseReference.push().setValue(user);
     }
 
 
