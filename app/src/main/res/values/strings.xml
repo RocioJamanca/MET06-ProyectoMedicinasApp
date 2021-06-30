@@ -10,4 +10,19 @@
     <string name="menu_home">Home</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_logout">Log Out</string>
+    <string name="title_activity_calendar">Calendar</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+
+    <string-array name="days">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
+
+
 </resources>

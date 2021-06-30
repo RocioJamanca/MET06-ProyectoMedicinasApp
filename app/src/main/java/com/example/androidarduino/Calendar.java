@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,13 +16,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
-public class HomeMenu extends AppCompatActivity {
-
-    String userEmail;
+public class Calendar extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -32,14 +28,9 @@ public class HomeMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_menu);
+        setContentView(R.layout.activity_calendar);
 
-        Button btnProfile = findViewById(R.id.btn_profile_home);
-        Button btnCalendar = findViewById(R.id.btn_calendar_home);
-        Button btnRemote = findViewById(R.id.btn_remote_home);
-        Button btnLogOut = findViewById(R.id.btn_logOut_home);
-        TextView completeName = findViewById(R.id.txt_name_home);
-
+        Button btnAddMedicine = findViewById(R.id.btn_addMedicine_calendar);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseAuth= FirebaseAuth.getInstance();
@@ -54,7 +45,7 @@ public class HomeMenu extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     User user = snapshot.getValue(User.class);
-                                    completeName.setText("Welcome " + user.getName());
+
                                 }
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
@@ -70,47 +61,13 @@ public class HomeMenu extends AppCompatActivity {
 
 
 
-
-
-
-
-        btnProfile.setOnClickListener(new View.OnClickListener() {
+        btnAddMedicine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Profile.class);
-                startActivity(intent);
+                Intent i = new Intent(getApplicationContext(), AddMedicine.class);
+                startActivity(i);
             }
         });
-
-        btnLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(HomeMenu.this, Login.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
-        btnCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeMenu.this, Calendar.class);
-                startActivity(intent);
-            }
-        });
-
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(HomeMenu.this, Login.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
     }
     @Override
     protected void onStart() {
