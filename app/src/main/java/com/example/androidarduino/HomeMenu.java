@@ -30,8 +30,6 @@ public class HomeMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Profile.class);
-                //Pasamos el usuario
-                //intent.putExtra("email", userEmail);
                 startActivity(intent);
             }
         });
