@@ -68,10 +68,13 @@ public class HomeMenu extends AppCompatActivity {
         };
 
 
-
-
-
-
+        btnRemote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Arduino.class);
+                startActivity(intent);
+            }
+        });
 
 
         btnProfile.setOnClickListener(new View.OnClickListener() {

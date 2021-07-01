@@ -30,7 +30,7 @@ public class Arduino extends MainActivity {
         final long[] start = {0};
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://androidarduino-68fe7-default-rtdb.firebaseio.com");
         DatabaseReference myRef = database.getReference("/UsersData/BDd0FDJDogWDFXkFx6TS0Ft120L2/dades/int");
-                //LLegir el valor
+        //LLegir el valor
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -89,13 +89,13 @@ public class Arduino extends MainActivity {
         });
 
         SeekBar seekBar2 = (SeekBar)findViewById(R.id.seekBar2);
-        seekBar.setProgress((int)start[0]);
-        seekBar.incrementProgressBy(1);
-        seekBar.setMax(5);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+        seekBar2.setProgress((int)start[0]);
+        seekBar2.incrementProgressBy(1);
+        seekBar2.setMax(5);
+        seekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
 
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            public void onProgressChanged(SeekBar seekBar2, int progress, boolean fromUser) {
                 myRef2.setValue(progress);
             }
 
