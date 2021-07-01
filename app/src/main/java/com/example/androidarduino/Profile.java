@@ -49,7 +49,6 @@ public class Profile extends AppCompatActivity {
         TextView txt_device = findViewById(R.id.text_device_profile);
         TextView txt_patient = findViewById(R.id.text_patient_profile);
         ImageView img_userProfile = findViewById(R.id.img_userProfile_profile);
-        Button btnChangePass = findViewById(R.id.btn_changePass_profile);
         Button btnEditProfile = findViewById(R.id.btn_editProfile_profile);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -96,12 +95,6 @@ public class Profile extends AppCompatActivity {
         };
 
 
-        btnChangePass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         btnEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override

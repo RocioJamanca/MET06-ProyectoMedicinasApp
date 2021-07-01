@@ -14,6 +14,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -33,6 +35,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
@@ -58,9 +61,12 @@ public class ProfileEdit extends AppCompatActivity {
     private static final int STORAGE_REQUEST = 200;
     private static final int IMAGEPICK_GALLERY_REQUEST = 300;
     private static final int IMAGE_PICKCAMERA_REQUEST = 400;
+    int SELECT_PICTURE = 200;
     Uri image_uri;
     Uri downloadUri;
     String downUri = "";
+    EditText inputName;
+    EditText inputSurname;
 
     ImageView inputUserProfile;
 
@@ -68,11 +74,11 @@ public class ProfileEdit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
+        storageReference= FirebaseStorage.getInstance().getReference().child("UsersProfilePhoto");
 
 
-
-        EditText inputName = findViewById(R.id.text_name_editProfile);
-        EditText inputSurname = findViewById(R.id.text_surname_editProfile);
+        inputName = findViewById(R.id.text_name_editProfile);
+        inputSurname = findViewById(R.id.text_surname_editProfile);
         EditText inputAge = findViewById(R.id.text_age_editProfile);
         EditText inputDevice = findViewById(R.id.text_device_editProfile);
         inputUserProfile = findViewById(R.id.img_userProfile_editProfile);
@@ -187,7 +193,8 @@ public class ProfileEdit extends AppCompatActivity {
         inputUserProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CropImage.startPickImageActivity(ProfileEdit.this);
+              CropImage.startPickImageActivity(ProfileEdit.this);
+//            imagechooser();
             }
         });
 
@@ -226,7 +233,79 @@ public class ProfileEdit extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @Override
+
+    public void imagechooser(){
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(i,"Selecciona la foto de perfil"), SELECT_PICTURE);
+    }
+
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (resultCode == RESULT_OK) {
+//
+//            // compare the resultCode with the
+//            // SELECT_PICTURE constant
+//            if (requestCode == SELECT_PICTURE) {
+//                // Get the url of the image from data
+//                Uri selectedImageUri = data.getData();
+//                if (null != selectedImageUri) {
+//
+//                    try {
+//                        thumb_bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    inputUserProfile.setImageURI(selectedImageUri);
+//
+//                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//                    thumb_bitmap.compress((Bitmap.CompressFormat.JPEG),80,(byteArrayOutputStream));
+//                    final byte[] thumb_byte = byteArrayOutputStream.toByteArray();
+//
+//                String name, surname;
+//                    //Name
+//                    if(inputName.getText().toString().isEmpty()) {
+//                        name = (inputName.getHint().toString());
+//                    }
+//                    else {
+//                        name = (inputName.getText().toString());
+//                    }
+//                    //Surname
+//                    if(inputSurname.getText().toString().isEmpty()) {
+//                        surname = (inputSurname.getHint().toString());
+//                    }
+//
+//                    else {
+//                        surname = (inputName.getText().toString());
+//                    }
+//
+//                StorageReference ref = storageReference.child(name +" "+surname);
+//                UploadTask uploadTask = ref.putBytes(thumb_byte);
+//                Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+//                    @Override
+//                    public Task<Uri> then(@NonNull @NotNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+//                        if (!task.isSuccessful()){
+//                            throw Objects.requireNonNull(task.getException());
+//                        }
+//                        return ref.getDownloadUrl();
+//                    }
+//
+//                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+//                    @Override
+//                    public void onComplete(@NonNull @NotNull Task<Uri> task) {
+//                        downloadUri = task.getResult();
+//                        downUri = downloadUri.toString();
+//                        //  Toast.makeText(Register.this, "Image correctly added", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//
+//                }
+//            }
+//        }
+        @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
@@ -285,11 +364,16 @@ public class ProfileEdit extends AppCompatActivity {
                         downloadUri = task.getResult();
                         assert downloadUri != null;
                         downUri = downloadUri.toString();
-                        //  Toast.makeText(Register.this, "Image correctly added", Toast.LENGTH_SHORT).show();
+                          Toast.makeText(ProfileEdit.this, "Image correctly added", Toast.LENGTH_SHORT).show();
                     }
                 });
 
             }
         }
     }
-}
+
+    }
+
+
+
+

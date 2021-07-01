@@ -6,24 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".AddMedicine">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        app:srcCompat="@android:drawable/ic_menu_gallery"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="50dp"/>
 
     <TextView
         android:id="@+id/txt_txtMedName_addMedicine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Medicine Name"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="@+id/txt_medName_addMedicine"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintBottom_toTopOf="@+id/txt_medName_addMedicine" />
 
     <EditText
         android:id="@+id/txt_medName_addMedicine"

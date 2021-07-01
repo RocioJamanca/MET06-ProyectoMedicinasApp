@@ -149,7 +149,7 @@ public class Login extends AppCompatActivity {
 
               String completeName = user.getName() + " " +user.getSurname();
                 Intent i = new Intent(getApplicationContext(), HomeMenu.class);
-                Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                         Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 i.putExtra("completeName",completeName);
