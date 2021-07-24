@@ -14,9 +14,8 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.Androidarduino">
-        <activity android:name=".medicineDay">
-
-        </activity>
+        <activity android:name=".RemoteDevice"></activity>
+        <activity android:name=".medicineDay"></activity>
         <activity android:name=".MedTake" />
         <activity android:name=".Calendar" />
         <activity android:name=".AddMedicine" />

@@ -145,6 +145,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:backgroundTint="#FA0404"
+                android:layout_marginTop="10dp"
                 android:text="SOS"
                 android:textSize="36sp" />
         </LinearLayout>

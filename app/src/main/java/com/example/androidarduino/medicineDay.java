@@ -24,7 +24,9 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.ref.Reference;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +45,10 @@ public class medicineDay extends AppCompatActivity {
     ArrayList<Medicine> medicineListFriday ;
     ArrayList<Medicine> medicineListSaturday;
     ArrayList<Medicine> medicineListSunday;
+    Button btnYESTakeMed,btnNOTakeMed,btnPASSTakeMed;
+    ArrayList<String> weekDays = new ArrayList<>(Arrays.asList("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"));
+    int currentDay=0;
+
     int selected = 0;
     String device, isPatient;
     @Override
@@ -58,9 +64,9 @@ public class medicineDay extends AppCompatActivity {
         planificationArrayList = new ArrayList<>();
         adapter = new MedicineDayAdapter(planificationArrayList,this, selected);
         rv_planification.setAdapter(adapter);
-        Button btnYESTakeMed = findViewById(R.id.btn_takeMed_medDay);
-        Button btnNOTakeMed = findViewById(R.id.btn_noMed_medDay);
-        Button btnPASSTakeMed = findViewById(R.id.btn_pass_medDay);
+        btnYESTakeMed = findViewById(R.id.btn_takeMed_medDay);
+        btnNOTakeMed = findViewById(R.id.btn_noMed_medDay);
+        btnPASSTakeMed = findViewById(R.id.btn_pass_medDay);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseAuth= FirebaseAuth.getInstance();
@@ -198,7 +204,10 @@ public class medicineDay extends AppCompatActivity {
         btnPASSTakeMed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchMedicine("PASS");
+                //Si pasamos de dia ponemos no en los medicamentos restantes
+                for (int i=selected; i<medicineListMonday.size();i++) {
+                    searchMedicine("NO");
+                }
             }
         });
     }
@@ -226,10 +235,9 @@ public class medicineDay extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for(DataSnapshot deviceSnap : dataSnapshot.getChildren() ){
-//                                User user = deviceSnap.getValue(User.class);
                                 String key = deviceSnap.getKey();;
 
-                                DatabaseReference devRef = FirebaseDatabase.getInstance().getReference("usuarios/"+key+"/medicine/Monday");
+                                DatabaseReference devRef = FirebaseDatabase.getInstance().getReference("usuarios/"+key+"/medicine/"+weekDays.get(currentDay));
                                 devRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -237,7 +245,7 @@ public class medicineDay extends AppCompatActivity {
                                             for(DataSnapshot medicines : snapshot.getChildren()){
                                                 String medicine_name = medicines.child("medicine_name").getValue().toString();
                                                 String keyMed = medicines.getKey();
-                                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("usuarios/"+key+"/medicine/"+"Monday/"+keyMed).child("took");
+                                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("usuarios/"+key+"/medicine/"+weekDays.get(currentDay)+"/"+keyMed).child("took");
                                                 if (medicine_name.equals(medicineListMonday.get(selected).medicine_name)){
                                                     ref.setValue(status);
                                                     selected += 1;
@@ -245,6 +253,10 @@ public class medicineDay extends AppCompatActivity {
                                                     adapter.notifyDataSetChanged();
                                                     Toast toast = Toast.makeText(getApplicationContext(),"Actualizado!",Toast.LENGTH_SHORT);
                                                     toast.show();
+                                                    if(selected == medicineListMonday.size()){
+                                                        btnYESTakeMed.setEnabled(false);
+                                                        btnNOTakeMed.setEnabled(false);
+                                                    }
                                                     break;
                                                 }
 
@@ -278,6 +290,12 @@ public class medicineDay extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Please login!", Toast.LENGTH_SHORT).show();
         };
     }
+
+    public void whichDay(){
+
+    }
+
+
 
     @Override
     protected void onStart() {
