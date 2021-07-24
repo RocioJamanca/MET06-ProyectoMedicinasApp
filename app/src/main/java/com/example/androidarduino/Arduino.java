@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import static android.content.ContentValues.TAG;
 
-public class Arduino extends MainActivity {
+public class Arduino extends HomeMenu {
     Button btnSoloBack;
 
     @Override

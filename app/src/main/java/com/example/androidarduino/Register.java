@@ -57,7 +57,6 @@ public class Register extends AppCompatActivity {
 
     //To compress the profile image and the upload to the storage
     Bitmap thumb_bitmap =null;
-    private static final int GalleryPick = 1;
     private static final int CAMERA_REQUEST = 100;
     private static final int STORAGE_REQUEST = 200;
     private static final int IMAGEPICK_GALLERY_REQUEST = 300;
@@ -91,6 +90,8 @@ public class Register extends AppCompatActivity {
         EditText input_age = findViewById(R.id.txt_age_register);
         EditText input_confirm_pass = findViewById(R.id.txt_passconfirm_register);
         Button register = findViewById(R.id.btn_registrarse_register);
+
+        EditText input_device = findViewById(R.id.txt_device_register);
         //Button newPhoto = findViewById(R.id.btn_newPhoto_register);
         profilePhoto = findViewById(R.id.img_user_register);
 
@@ -107,9 +108,10 @@ public class Register extends AppCompatActivity {
                 String password =input_pass.getText().toString();
                 String age = input_age.getText().toString();
                 String confirmationPass = input_confirm_pass.getText().toString();
+                String device = input_device.getText().toString();
 
                 //El primer if es para asegurarnos que los campos están completados
-                if (!email.isEmpty() && !password.isEmpty()&& !surname.isEmpty() && !name.isEmpty() && !age.isEmpty() && !confirmationPass.isEmpty() && !is_patient.isEmpty()) {
+                if (!email.isEmpty() && !password.isEmpty()&& !surname.isEmpty() && !name.isEmpty() && !age.isEmpty() && !confirmationPass.isEmpty() && !is_patient.isEmpty() && !device.isEmpty()){
 
                     //Asegurarnos que el formato de email es correcto la contraseña tiene almenos 6 caracteres
                     // y la contraseña y la confirmación de contraseña coinciden, en caso de que no se cumpla alguna condicion entramos
@@ -132,14 +134,14 @@ public class Register extends AppCompatActivity {
                         else if (!password.equals(confirmationPass)){
                             input_confirm_pass.setError("Passwords do not match try again!");
                             input_confirm_pass.requestFocus();
-                        }else if(is_patient.isEmpty()){
-                            Toast.makeText(getApplicationContext(), "Please, check if you are a patient or relative", Toast.LENGTH_SHORT).show();
                         }
                         //Si la contraseña no tiene los carácteres correctos
                         else {
                             input_pass.setError("Password must have at least 6 characters");
                             input_pass.requestFocus();
                         }
+
+
                     }
 
                     //En caso de que todos los parámetros son correctos.
@@ -147,7 +149,7 @@ public class Register extends AppCompatActivity {
                              //Comprobamos si el email ya está en uso
                         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
-                            public void onDataChange(@NonNull @org.jetbrains.annotations.NotNull DataSnapshot snapshot) {
+                            public void onDataChange(DataSnapshot snapshot) {
                                 check_emailList = new ArrayList<>();
                                 if (snapshot.exists()) {
 
@@ -172,8 +174,12 @@ public class Register extends AppCompatActivity {
                                     input_name.setText("");
                                     input_pass.setText("");
                                     input_surname.setText("");
+                                    input_device.setText("");
 
-                                    registNewUser(email,password,name,surname,age,"",is_patient,downUri);}
+                                    if(is_patient.isEmpty()){
+                                        is_patient = "Patient";
+                                    }
+                                    registNewUser(email,password,name,surname,age,device,is_patient,downUri);}
                             }
                             @Override
                             public void onCancelled(@NonNull @org.jetbrains.annotations.NotNull DatabaseError error) {
@@ -229,39 +235,25 @@ public class Register extends AppCompatActivity {
         });
 
 
-        profilePhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CropImage.startPickImageActivity(Register.this);
-            }
-        });
+        profilePhoto.setOnClickListener(v -> CropImage.startPickImageActivity(Register.this));
     }//On create end
 
 
     public void registNewUser (String email,String password,String name, String surname, String age,String device,String patient ,String url){
 
-        mFirebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
-                        if(!task.isSuccessful()){
-                            Toast.makeText(getApplicationContext(), "Error Ocurred!", Toast.LENGTH_SHORT).show();
-                        } else{
-                            User user = new User(email,password,name,surname,age,device,patient,url);
-                            String userId = task.getResult().getUser().getUid();
-                            firebaseDatabase.getReference("usuarios/"+userId).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    Intent intent = new Intent(getApplicationContext(), HomeMenu.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                                            Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    intent.putExtra("completeName", name + " " + surname);
-                                    startActivity(intent);
-                                }
-                            });
-
-                        }
-                    }
+        mFirebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(Register.this, task -> {
+            if(!task.isSuccessful()){
+                Toast.makeText(getApplicationContext(), "Error Ocurred!", Toast.LENGTH_SHORT).show();
+            } else{
+                User user = new User(email,password,name,surname,age,device,patient,url);
+                String userId = task.getResult().getUser().getUid();
+                firebaseDatabase.getReference("usuarios/"+userId).setValue(user).addOnSuccessListener(unused -> {
+                    Intent intent = new Intent(getApplicationContext(), HomeMenu.class);
+                    startActivity(intent);
                 });
+
+            }
+        });
 
                // databaseReference.push().setValue(user);
     }
@@ -334,23 +326,16 @@ public class Register extends AppCompatActivity {
 
                 StorageReference ref = storageReference.child(randomName);
                 UploadTask uploadTask = ref.putBytes(thumb_byte);
-                Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                    @Override
-                    public Task<Uri> then(@NonNull @NotNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                        if (!task.isSuccessful()){
-                            throw Objects.requireNonNull(task.getException());
-                        }
-                        return ref.getDownloadUrl();
+                Task<Uri> uriTask = uploadTask.continueWithTask(task -> {
+                    if (!task.isSuccessful()){
+                        throw Objects.requireNonNull(task.getException());
                     }
-
-                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull @NotNull Task<Uri> task) {
-                       downloadUri = task.getResult();
-                        assert downloadUri != null;
-                        downUri = downloadUri.toString();
-                     //  Toast.makeText(Register.this, "Image correctly added", Toast.LENGTH_SHORT).show();
-                    }
+                    return ref.getDownloadUrl();
+                }).addOnCompleteListener(task -> {
+                   downloadUri = task.getResult();
+                    assert downloadUri != null;
+                    downUri = downloadUri.toString();
+                 //  Toast.makeText(Register.this, "Image correctly added", Toast.LENGTH_SHORT).show();
                 });
 
             }

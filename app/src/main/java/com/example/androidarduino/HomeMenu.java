@@ -28,7 +28,7 @@ public class HomeMenu extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-
+    String patient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +38,9 @@ public class HomeMenu extends AppCompatActivity {
         Button btnCalendar = findViewById(R.id.btn_calendar_home);
         Button btnRemote = findViewById(R.id.btn_remote_home);
         Button btnLogOut = findViewById(R.id.btn_logOut_home);
+        Button btnTakeMedicine = findViewById(R.id.btn_takeMedicine_home);
         TextView completeName = findViewById(R.id.txt_name_home);
-
+        //btnTakeMedicine.setEnabled(false);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseAuth= FirebaseAuth.getInstance();
@@ -54,7 +55,11 @@ public class HomeMenu extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     User user = snapshot.getValue(User.class);
-                                    completeName.setText("Welcome " + user.getName());
+                                    completeName.setText("Welcome " +user.getPatient()+" "+ user.getName());
+                                    patient = user.getPatient();
+                                    if (patient.equals("Patient")){
+                                        btnTakeMedicine.setEnabled(true);
+                                    }
                                 }
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
@@ -66,6 +71,7 @@ public class HomeMenu extends AppCompatActivity {
                 }
             }
         };
+
 
 
         btnRemote.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +105,14 @@ public class HomeMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeMenu.this, Calendar.class);
+                startActivity(intent);
+            }
+        });
+
+        btnTakeMedicine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeMenu.this, medicineDay.class);
                 startActivity(intent);
             }
         });

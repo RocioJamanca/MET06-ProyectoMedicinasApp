@@ -14,7 +14,10 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.Androidarduino">
-        <activity android:name=".MedTake"></activity>
+        <activity android:name=".medicineDay">
+
+        </activity>
+        <activity android:name=".MedTake" />
         <activity android:name=".Calendar" />
         <activity android:name=".AddMedicine" />
         <activity android:name=".ProfileEdit" />
@@ -31,7 +34,7 @@
         <activity android:name=".Arduino">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".HomeMenu" />
         </activity>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

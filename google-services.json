@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "792568836381",
-    "project_id": "androidentrega-f5196",
-    "storage_bucket": "androidentrega-f5196.appspot.com"
+    "project_number": "980263468370",
+    "firebase_url": "https://androidarduino-68fe7-default-rtdb.firebaseio.com",
+    "project_id": "androidarduino-68fe7",
+    "storage_bucket": "androidarduino-68fe7.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:792568836381:android:13f056bb60c183fe43f1f4",
+        "mobilesdk_app_id": "1:980263468370:android:1ff3565fc63a5411c40e8b",
         "android_client_info": {
           "package_name": "com.example.androidarduino"
         }
       },
       "oauth_client": [
         {
-          "client_id": "792568836381-dl3n791mjf6j6nbfe7v71p79can4fg8m.apps.googleusercontent.com",
+          "client_id": "980263468370-vvs2hdj25bvclstlo6eb9on7ucbo6iro.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDEa1qQ0tB7kKauWBZ_SbAXhplDM8PtwYE"
+          "current_key": "AIzaSyD_pK8vOIPqWIFSv3LE21JXJZCI0nfMh1o"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "792568836381-dl3n791mjf6j6nbfe7v71p79can4fg8m.apps.googleusercontent.com",
+              "client_id": "980263468370-vvs2hdj25bvclstlo6eb9on7ucbo6iro.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

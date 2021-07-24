@@ -78,6 +78,7 @@ public class Calendar extends AppCompatActivity {
         rv_friday = findViewById(R.id.recyView_friday);
         rv_saturday = findViewById(R.id.recyView_saturday);
         rv_sunday = findViewById(R.id.recyView_sunday);
+
         rv_plani.setLayoutManager(linearLayoutManager);
         rv_tuesday.setLayoutManager(linearLayoutManagerTuesday);
         rv_wednesday.setLayoutManager(linearLayoutManagerWednesday);

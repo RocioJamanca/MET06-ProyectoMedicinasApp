@@ -1,6 +1,8 @@
 package com.example.androidarduino;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
 
 public class User  {
     public String email;
@@ -11,6 +13,7 @@ public class User  {
     public String device;
     public String patient; //Paciente o familiar?
     public String profile_photo;
+    public HashMap<String, Medicine> medicine;
 
 
     public String getPatient() {

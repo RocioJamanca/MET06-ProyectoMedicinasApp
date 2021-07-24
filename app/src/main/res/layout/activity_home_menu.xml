@@ -84,6 +84,17 @@
         />
 
     <Button
+        android:id="@+id/btn_takeMedicine_home"
+        android:text="Take Medicine"
+        android:layout_marginTop="10dp"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_remote_home"
+        />
+
+    <Button
         android:id="@+id/btn_logOut_home"
         android:text="Log Out"
         android:layout_marginTop="10dp"
@@ -91,7 +102,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_remote_home"
+        app:layout_constraintTop_toBottomOf="@+id/btn_takeMedicine_home"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

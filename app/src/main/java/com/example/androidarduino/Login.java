@@ -139,20 +139,14 @@ public class Login extends AppCompatActivity {
        firebaseAuth.addAuthStateListener(mAuthStateListener);
     }
     private void moveToHomeActivity(FirebaseUser mFirebaseUser) {
-        firebaseDatabase.getReference("usuarios").child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+        firebaseDatabase.getReference("usuarios").child(mFirebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                // String completeName = snapshot.child("name").getValue(String.class);
                 User user = snapshot.getValue(User.class);
                 assert user != null;
-                //Toast.makeText(getApplicationContext(), user.getEmail(), Toast.LENGTH_SHORT).show();
 
-              String completeName = user.getName() + " " +user.getSurname();
                 Intent i = new Intent(getApplicationContext(), HomeMenu.class);
-               // Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                i.putExtra("completeName",completeName);
                 startActivity(i);
             }
 

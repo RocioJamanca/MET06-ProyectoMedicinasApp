@@ -1,6 +1,7 @@
 package com.example.androidarduino;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,54 +42,29 @@ public class PlaniAdapter extends RecyclerView.Adapter<PlaniAdapter.PlaniViewHol
         holder.medicineName.setText(plani.getMedicine_name());
 
 
-        holder.pillTaked.setOnClickListener(this);
-        holder.pillNoTaked.setOnClickListener(this);
+
 
     }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.adMedicine_row:
-
-                break;
-            case R.id.noAddMedicine_row:
-                break;
-        }
-
-    }
-
-
-
 
     @Override
     public int getItemCount() {
         return planificationList.size();
     }
 
+    @Override
+    public void onClick(View v) {
+
+    }
+
 
     public class PlaniViewHolder extends  RecyclerView.ViewHolder{
         TextView medicineName;
-        Button pillTaked;
-        Button pillNoTaked;
 
 
         public PlaniViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
 
             medicineName = itemView.findViewById(R.id.pillName_row);
-            pillNoTaked = itemView.findViewById(R.id.noAddMedicine_row);
-            pillTaked = itemView.findViewById(R.id.adMedicine_row);
-
-            pillTaked.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-
-
-
 
         }
     }
