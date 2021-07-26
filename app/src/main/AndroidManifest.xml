@@ -7,15 +7,25 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
 
-    <application
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
+
+
+<application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="MedCare"
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.Androidarduino">
-        <activity android:name=".RemoteDevice"></activity>
-        <activity android:name=".medicineDay"></activity>
+
+        <activity android:name=".TextReconigtion">
+            <meta-data
+                android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+                android:value="ocr" />
+        </activity>
+        <activity android:name=".RemoteDevice" />
+        <activity android:name=".medicineDay" />
         <activity android:name=".MedTake" />
         <activity android:name=".Calendar" />
         <activity android:name=".AddMedicine" />

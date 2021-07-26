@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
@@ -193,7 +194,10 @@ public class medicineDay extends AppCompatActivity {
         btnYESTakeMed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchMedicine("YES");
+                Intent i = new Intent(getApplicationContext(), TextReconigtion.class);
+                startActivity(i);
+
+                //searchMedicine("YES");
             }
         });
 
