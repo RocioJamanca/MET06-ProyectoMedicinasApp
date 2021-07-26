@@ -69,8 +69,32 @@ public class AddMedicine extends AppCompatActivity implements AdapterView.OnItem
                 else {
                     FirebaseUser mFirebaseUser = firebaseAuth.getCurrentUser();
                     DatabaseReference dataRef = firebaseDatabase.getReference("usuarios").child(mFirebaseUser.getUid());
-                    Medicine medicine = new Medicine("",medicineName.getText().toString(),""); //Aqui aun no es ni si ni no
-                    dataRef.child("medicine").child(day).push().setValue(medicine);
+                    dataRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                            if (snapshot.exists()){
+                               if(snapshot.child("medicine").child(day).getChildrenCount()>=2){
+                                   Toast toast = Toast.makeText(getApplicationContext(),"No more medicines can be added for this day", Toast.LENGTH_LONG);
+                                   toast.show();
+                               }
+                               else {
+                                   Medicine medicine = new Medicine("",medicineName.getText().toString(),""); //Aqui aun no es ni si ni no
+                                   dataRef.child("medicine").child(day).push().setValue(medicine);
+                               }
+                            }
+                            else{
+                                Medicine medicine = new Medicine("",medicineName.getText().toString(),""); //Aqui aun no es ni si ni no
+                                dataRef.child("medicine").child(day).push().setValue(medicine);
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                        }
+                    });
+
                 }
 
             }
@@ -98,4 +122,7 @@ public class AddMedicine extends AppCompatActivity implements AdapterView.OnItem
         super.onStart();
         firebaseAuth.addAuthStateListener(mAuthStateListener);
     }
+
+
+
 }

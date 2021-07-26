@@ -41,6 +41,11 @@ public class PlaniAdapter extends RecyclerView.Adapter<PlaniAdapter.PlaniViewHol
         Medicine plani = planificationList.get(position);
         holder.medicineName.setText(plani.getMedicine_name());
 
+        if(plani.getTook().isEmpty()){
+            holder.medicineTaken.setText("?");
+        }else{
+            holder.medicineTaken.setText(plani.getTook());
+        }
 
 
 
@@ -59,13 +64,12 @@ public class PlaniAdapter extends RecyclerView.Adapter<PlaniAdapter.PlaniViewHol
 
     public class PlaniViewHolder extends  RecyclerView.ViewHolder{
         TextView medicineName;
-
+        TextView medicineTaken;
 
         public PlaniViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
-
             medicineName = itemView.findViewById(R.id.pillName_row);
-
+            medicineTaken = itemView.findViewById(R.id.pillTaken_row);
         }
     }
 }

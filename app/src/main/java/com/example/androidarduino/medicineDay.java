@@ -47,6 +47,7 @@ public class medicineDay extends AppCompatActivity {
     ArrayList<Medicine> medicineListSaturday;
     ArrayList<Medicine> medicineListSunday;
     Button btnYESTakeMed, btnNOTakeMed, btnPASSTakeMed;
+    TextView message_medDay;
     ArrayList<String> weekDays = new ArrayList<>(Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"));
     int currentDay = 0;
     TextView textDay;
@@ -70,6 +71,8 @@ public class medicineDay extends AppCompatActivity {
         btnYESTakeMed = findViewById(R.id.btn_takeMed_medDay);
         btnNOTakeMed = findViewById(R.id.btn_noMed_medDay);
         btnPASSTakeMed = findViewById(R.id.btn_pass_medDay);
+        TextView message_medDay = findViewById(R.id.txt_message_medDay);
+        message_medDay.setText("");
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -213,6 +216,7 @@ public class medicineDay extends AppCompatActivity {
                     adapter = new MedicineDayAdapter(whichDayList(currentDay), getApplicationContext(), selected);
                     rv_planification.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
+
                 }
                 else{
                     //Si pasamos de dia ponemos no en los medicamentos restantes
@@ -230,6 +234,7 @@ public class medicineDay extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser mFirebaseUser = firebaseAuth.getCurrentUser();
+
         if (mFirebaseUser != null) {
             firebaseDatabase.getReference("usuarios").child(mFirebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -281,8 +286,6 @@ public class medicineDay extends AppCompatActivity {
                                                     }
                                                     break;
                                                 }
-
-
                                             }
                                         } else {
                                             if(currentDay < 6){
@@ -293,11 +296,15 @@ public class medicineDay extends AppCompatActivity {
                                             }
                                             selected = 0;
                                             textDay.setText(weekDays.get(currentDay));
+                                            if (whichDayList(currentDay).size()==0){
+                                                message_medDay.setText("There are no medications in the planning for this day");
+                                            }
+                                            else {
+                                                message_medDay.setText("");
+                                            }
                                             adapter = new MedicineDayAdapter(whichDayList(currentDay), getApplicationContext(), selected);
                                             rv_planification.setAdapter(adapter);
                                             adapter.notifyDataSetChanged();
-//                                            Toast toast = Toast.makeText(getApplicationContext(), "Aún no hay medicinas en la plani", Toast.LENGTH_SHORT);
-//                                            toast.show();
                                         }
                                     }
 

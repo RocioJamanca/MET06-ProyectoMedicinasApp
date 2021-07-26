@@ -44,10 +44,16 @@ public class MedicineDayAdapter extends RecyclerView.Adapter<MedicineDayAdapter.
         Medicine medicine = medicineList.get(position);
         holder.medicineName.setText(medicine.getMedicine_name());
         if(this.selected == position){
-            holder.constraintLayout.setBackgroundColor(Color.GREEN);
+            holder.constraintLayout.setBackgroundColor(Color.rgb(30,201,198));
         }
         else {
             holder.constraintLayout.setBackgroundColor(Color.WHITE);
+        }
+
+        if(medicine.getTook().isEmpty()){
+            holder.medicineTaken.setText("?");
+        }else{
+            holder.medicineTaken.setText(medicine.getTook());
         }
     }
 
@@ -67,10 +73,11 @@ public class MedicineDayAdapter extends RecyclerView.Adapter<MedicineDayAdapter.
 
         TextView medicineName;
         ConstraintLayout constraintLayout;
+        TextView medicineTaken;
 
         public MedicineViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
-
+            medicineTaken = itemView.findViewById(R.id.pillTaken_row);
             medicineName = itemView.findViewById(R.id.pillName_row);
             constraintLayout = itemView.findViewById(R.id.const_medDay_row);
         }
