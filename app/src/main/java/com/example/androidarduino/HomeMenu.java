@@ -40,7 +40,8 @@ public class HomeMenu extends AppCompatActivity {
         Button btnLogOut = findViewById(R.id.btn_logOut_home);
         Button btnTakeMedicine = findViewById(R.id.btn_takeMedicine_home);
         TextView completeName = findViewById(R.id.txt_name_home);
-        //btnTakeMedicine.setEnabled(false);
+        btnTakeMedicine.setEnabled(false);
+        btnCalendar.setEnabled(false);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseAuth= FirebaseAuth.getInstance();
@@ -59,6 +60,9 @@ public class HomeMenu extends AppCompatActivity {
                                     patient = user.getPatient();
                                     if (patient.equals("Patient")){
                                         btnTakeMedicine.setEnabled(true);
+                                    }
+                                    else{
+                                        btnCalendar.setEnabled(true);
                                     }
                                 }
                                 @Override

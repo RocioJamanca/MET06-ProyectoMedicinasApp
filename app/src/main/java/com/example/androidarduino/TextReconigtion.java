@@ -25,7 +25,9 @@ import com.google.firebase.ml.vision.text.FirebaseVisionTextDetector;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 public class TextReconigtion extends AppCompatActivity {
 
@@ -34,7 +36,7 @@ public class TextReconigtion extends AppCompatActivity {
     TextView textRecognition;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     Bitmap imageBitmap;
-
+    String textDisplayed,med_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,17 +87,27 @@ public class TextReconigtion extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"No text found in imag",Toast.LENGTH_LONG).show();
         }
         else {
+            ArrayList<String> medicines = new ArrayList<>();
             for (FirebaseVisionText.Block block: firebaseVisionText.getBlocks()){
-                String text = block.getText();
-                textRecognition.setText(text);
+                textDisplayed = block.getText();
+                medicines.add(textDisplayed);
             }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                textRecognition.setText(String.join(", ",medicines));
+            }
+
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("datos",medicines);
+            setResult(medicineDay.RESULT_OK,returnIntent);
+            finish();
+
         }
     }
 
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
+        takePictureIntent.putExtra("android.intent.extras.CAMERA_FACING", 0);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
@@ -110,6 +122,7 @@ public class TextReconigtion extends AppCompatActivity {
             imageView.setImageBitmap(imageBitmap);
         }
     }
+
 
 
 }

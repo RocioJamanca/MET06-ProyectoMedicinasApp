@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 public class medicineDay extends AppCompatActivity {
+    public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     FirebaseAuth firebaseAuth;
     FirebaseDatabase firebaseDatabase;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -52,7 +53,6 @@ public class medicineDay extends AppCompatActivity {
     ArrayList<String> weekDays = new ArrayList<>(Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"));
     int currentDay = 0;
     TextView textDay;
-
     int selected = 0;
     String device, isPatient;
 
@@ -77,6 +77,7 @@ public class medicineDay extends AppCompatActivity {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
+
 
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -194,10 +195,8 @@ public class medicineDay extends AppCompatActivity {
         btnYESTakeMed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), TextReconigtion.class);
-                startActivity(i);
-
-                //searchMedicine("YES");
+                Intent i=new Intent(getApplicationContext(), TextReconigtion.class);
+                startActivityForResult(i, 1);
             }
         });
 
@@ -258,6 +257,10 @@ public class medicineDay extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for (DataSnapshot deviceSnap : dataSnapshot.getChildren()) {
                                 String key = deviceSnap.getKey();
+                                assert key != null;
+                                if (key.equals(mFirebaseUser.getUid())){
+                                    continue;
+                                }
 
                                 DatabaseReference devRef = FirebaseDatabase.getInstance().getReference("usuarios/" + key + "/medicine/" + weekDays.get(currentDay));
                                 devRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -300,12 +303,12 @@ public class medicineDay extends AppCompatActivity {
                                             }
                                             selected = 0;
                                             textDay.setText(weekDays.get(currentDay));
-                                            if (whichDayList(currentDay).size()==0){
-                                                message_medDay.setText("There are no medications in the planning for this day");
-                                            }
-                                            else {
-                                                message_medDay.setText("");
-                                            }
+//                                            if (whichDayList(currentDay).size()==0){
+//                                                message_medDay.setText("There are no medications in the planning for this day");
+//                                            }
+//                                            else {
+//                                                message_medDay.setText("");
+//                                            }
                                             adapter = new MedicineDayAdapter(whichDayList(currentDay), getApplicationContext(), selected);
                                             rv_planification.setAdapter(adapter);
                                             adapter.notifyDataSetChanged();
@@ -338,7 +341,7 @@ public class medicineDay extends AppCompatActivity {
 
 
 
-    public List<Medicine> whichDayList(int day){
+    public List<Medicine>   whichDayList(int day){
 
         switch (day){
             case 0:
@@ -374,6 +377,32 @@ public class medicineDay extends AppCompatActivity {
         super.onStart();
         firebaseAuth.addAuthStateListener(mAuthStateListener);
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) { // el "1" es el numero que pasaste como parametro
+            if (resultCode == medicineDay.RESULT_OK) {
+
+                ArrayList<String> medicinesName = data.getStringArrayListExtra("datos");
+                // tu codigo para continuar procesando
+                for(int med=0; med < medicinesName.size(); med++){
+                    if(medicinesName.get(med).contains(whichDayList(currentDay).get(selected).getMedicine_name())){
+                        searchMedicine("YES");
+                        return;
+                    }
+                }
+                Toast.makeText(getApplicationContext(),"The drug was not found in the list",Toast.LENGTH_LONG).show();
+
+            }
+            if (resultCode == medicineDay.RESULT_CANCELED) {
+                // código si no hay resultado
+                Toast.makeText(getApplicationContext(),"Action was not possible",Toast.LENGTH_LONG);
+
+            }
+        }
+    }//onActivityResult
 
 
 }

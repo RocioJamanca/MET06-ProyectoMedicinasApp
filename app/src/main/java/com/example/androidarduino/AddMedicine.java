@@ -79,11 +79,13 @@ public class AddMedicine extends AppCompatActivity implements AdapterView.OnItem
                                }
                                else {
                                    Medicine medicine = new Medicine("",medicineName.getText().toString(),""); //Aqui aun no es ni si ni no
+                                   Toast.makeText(getApplicationContext(),"The drug has been added to the list", Toast.LENGTH_LONG).show();
                                    dataRef.child("medicine").child(day).push().setValue(medicine);
                                }
                             }
                             else{
                                 Medicine medicine = new Medicine("",medicineName.getText().toString(),""); //Aqui aun no es ni si ni no
+                                Toast.makeText(getApplicationContext(),"The drug has been added to the list", Toast.LENGTH_LONG).show();
                                 dataRef.child("medicine").child(day).push().setValue(medicine);
                             }
 
