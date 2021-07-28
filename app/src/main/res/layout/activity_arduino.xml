@@ -24,11 +24,11 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView25"
+                android:id="@+id/txt_fallSensor_arduino"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="txt_fallSensor_arduino" />
 
         </LinearLayout>
 
@@ -45,11 +45,11 @@
                 android:text="Sensor humedad" />
 
             <TextView
-                android:id="@+id/textView26"
+                android:id="@+id/txt_humidity_arduino"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="txt_humidity_arduino" />
         </LinearLayout>
 
         <LinearLayout
@@ -69,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="txt_temperature_arduino" />
         </LinearLayout>
 
         <TextView

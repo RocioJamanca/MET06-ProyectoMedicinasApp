@@ -167,20 +167,11 @@ public class Calendar extends AppCompatActivity {
                        adapter = new PlaniAdapter(medicineListSunday,getApplicationContext());
                        rv_sunday.setAdapter(adapter);
                        adapter.notifyDataSetChanged();
-
-
-
                    }
-
                    @Override
                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
                    }
                });
-
-
-
-
             }
         };
 

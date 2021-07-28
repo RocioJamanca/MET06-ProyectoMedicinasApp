@@ -111,5 +111,15 @@ public class Profile extends AppCompatActivity {
         firebaseAuth.addAuthStateListener(mAuthStateListener);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(Profile.this, HomeMenu.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
 
 }

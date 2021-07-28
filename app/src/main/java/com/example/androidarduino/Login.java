@@ -142,12 +142,13 @@ public class Login extends AppCompatActivity {
         firebaseDatabase.getReference("usuarios").child(mFirebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
                // String completeName = snapshot.child("name").getValue(String.class);
                 User user = snapshot.getValue(User.class);
                 assert user != null;
 
                 Intent i = new Intent(getApplicationContext(), HomeMenu.class);
-                startActivity(i);
+                startActivity(i);}
             }
 
             @Override
