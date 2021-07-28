@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -33,21 +34,57 @@ public class Arduino extends HomeMenu {
     DatabaseReference myRef;
     TextView textFallSensor,textTemperature,textHumidity;
     int servoPosition, ledIntensity;
+    SeekBar ledIntensityBar, servoPositionBar;
+
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arduino);
+
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull @NotNull FirebaseAuth firebaseAuth) {
+                FirebaseUser mFirebaseUser = firebaseAuth.getCurrentUser();
+                if(mFirebaseUser!=null){
+                    firebaseDatabase.getReference("usuarios").child(mFirebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                            if (snapshot.exists()){
+                                User user = snapshot.getValue(User.class);
+                                patient = user.getPatient();
+                                if (isPatient.equals("Patient")){
+                                    ledIntensityBar.setEnabled(false);
+                                    servoPositionBar.setEnabled(false);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                        }
+                    });
+
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Please login!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
+
 
         //Cogemos los datos de la base de datos
         getDataValue();
 
         final long[] start = {0};
 
-        SeekBar seekBar = (SeekBar)findViewById(R.id.seekBar);
-        seekBar.setProgress(servoPosition);
-        seekBar.incrementProgressBy(1);
-        seekBar.setMax(4);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+        servoPositionBar = findViewById(R.id.seekBar);
+        servoPositionBar.setProgress(servoPosition);
+        servoPositionBar.incrementProgressBy(1);
+        servoPositionBar.setMax(4);
+        servoPositionBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -65,11 +102,11 @@ public class Arduino extends HomeMenu {
             }
         });
 
-        SeekBar seekBar2 = (SeekBar)findViewById(R.id.seekBar2);
-        seekBar2.setProgress(ledIntensity);
-        seekBar2.incrementProgressBy(1);
-        seekBar2.setMax(5);
-        seekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+        ledIntensityBar = findViewById(R.id.seekBar2);
+        ledIntensityBar.setProgress(ledIntensity);
+        ledIntensityBar.incrementProgressBy(1);
+        ledIntensityBar.setMax(5);
+        ledIntensityBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
 
             @Override
             public void onProgressChanged(SeekBar seekBar2, int progress, boolean fromUser) {
@@ -215,5 +252,10 @@ public class Arduino extends HomeMenu {
 
             }
         });
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        firebaseAuth.addAuthStateListener(mAuthStateListener);
     }
 }
