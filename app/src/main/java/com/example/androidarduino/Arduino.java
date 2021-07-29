@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +26,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import static android.content.ContentValues.TAG;
 
@@ -156,6 +160,7 @@ public class Arduino extends HomeMenu {
                                             Long humidity = deviceSnap.child("data").child("humidity").getValue(Long.class);
                                             Long leds = deviceSnap.child("data").child("leds").getValue(Long.class);
                                             Long servo = deviceSnap.child("data").child("servo").getValue(Long.class);
+                                            Long btnSOS = deviceSnap.child("data").child("btnSOS").getValue(Long.class);
 
                                             if(servo != null)
                                             servoPosition = servo.intValue();
@@ -168,9 +173,21 @@ public class Arduino extends HomeMenu {
                                             if((humidity !=null))
                                             {
                                                 textHumidity.setText(humidity.toString());
+                                                if (humidity>70){
+                                                    //Notificación
+                                                }
                                             }
                                             if(temperature !=null) {
                                                 textTemperature.setText(temperature.toString());
+                                                if (temperature>40){
+                                                    //Notificación
+                                                }
+                                            }
+                                            if(btnSOS !=null){
+                                                if (btnSOS==1){
+                                                    //Notificación
+
+                                                }
                                             }
                                         }
                                     }
@@ -235,7 +252,6 @@ public class Arduino extends HomeMenu {
                             for (DataSnapshot deviceSnap : snapshot.getChildren()){
                                 DatabaseReference dataRef = deviceSnap.child("data").child(data).getRef();
                                 dataRef.setValue(progress);
-
                             }
                         }
                     }
@@ -257,5 +273,22 @@ public class Arduino extends HomeMenu {
     protected void onStart() {
         super.onStart();
         firebaseAuth.addAuthStateListener(mAuthStateListener);
+    }
+
+    public void callNotification(String title, String detail){
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        JSONObject json = new JSONObject();
+        try{
+            String token = "";
+            json.put("to",token);
+            JSONObject notification = new JSONObject();
+            notification.put("title","I'm a title");
+            notification.put("detail", "i'm a detail");
+
+            json.put("data",notification);
+            String URL = "https://androidarduino-68fe7.googleapis.com/androidarduino-68fe7/send";
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

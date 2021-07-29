@@ -55,7 +55,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
              String detail = remoteMessage.getData().get("detail");
              greaterThanOreo(title,detail);
 
-
          }
     }
 
