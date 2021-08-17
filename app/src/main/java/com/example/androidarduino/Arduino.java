@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
@@ -79,6 +80,7 @@ public class Arduino extends HomeMenu {
 
 
 
+
         //Cogemos los datos de la base de datos
         getDataValue();
 
@@ -134,7 +136,7 @@ public class Arduino extends HomeMenu {
         myRef = database.getReference("usuarios");
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser mFirebaseUser = firebaseAuth.getCurrentUser();
-        firebaseDatabase.getReference("usuarios").child(mFirebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        firebaseDatabase.getReference("usuarios").child(mFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
@@ -155,12 +157,16 @@ public class Arduino extends HomeMenu {
                                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                                         if (snapshot.exists()){
 
-                                            Long sensorFall = deviceSnap.child("data").child("sensor").getValue(Long.class);
-                                            Long temperature = deviceSnap.child("data").child("temp").getValue(Long.class);
-                                            Long humidity = deviceSnap.child("data").child("humidity").getValue(Long.class);
+                                            Long sensorFall = deviceSnap.child("data").child("fall").getValue(Long.class);
+                                            Long temperature = deviceSnap.child("data").child("tmp").getValue(Long.class);
+                                            Long humidity = deviceSnap.child("data").child("hum").getValue(Long.class);
                                             Long leds = deviceSnap.child("data").child("leds").getValue(Long.class);
                                             Long servo = deviceSnap.child("data").child("servo").getValue(Long.class);
                                             Long btnSOS = deviceSnap.child("data").child("btnSOS").getValue(Long.class);
+
+                                            textFallSensor = findViewById(R.id.txt_fallSensor_arduino);
+                                            textTemperature =findViewById(R.id.txt_temperature_arduino);
+                                            textHumidity = findViewById(R.id.txt_humidity_arduino);
 
                                             if(servo != null)
                                             servoPosition = servo.intValue();
@@ -168,26 +174,18 @@ public class Arduino extends HomeMenu {
                                             ledIntensity = leds.intValue();
 
                                             if (sensorFall !=null ){
-                                                textFallSensor.setText(sensorFall.toString());
+                                                textFallSensor.setText(String.format(String.valueOf(sensorFall)));
                                             }
                                             if((humidity !=null))
                                             {
-                                                textHumidity.setText(humidity.toString());
-                                                if (humidity>70){
-                                                    //Notificación
-                                                }
+                                                textHumidity.setText(String.format(String.valueOf(humidity)));
+
                                             }
                                             if(temperature !=null) {
-                                                textTemperature.setText(temperature.toString());
-                                                if (temperature>40){
-                                                    //Notificación
-                                                }
+                                                textTemperature.setText(String.format(String.valueOf(temperature)));
                                             }
                                             if(btnSOS !=null){
-                                                if (btnSOS==1){
-                                                    //Notificación
 
-                                                }
                                             }
                                         }
                                     }
